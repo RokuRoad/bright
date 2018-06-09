@@ -1,4 +1,4 @@
-# Bright
+# New Document# Bright
 
 [![Build Status](https://travis-ci.com/RokuRoad/bright.svg?branch=develop)](https://travis-ci.com/RokuRoad/bright)
 [![Build Status](https://semaphoreci.com/api/v1/ialpert/bright/branches/develop/badge.svg)](https://semaphoreci.com/ialpert/bright)
@@ -26,11 +26,124 @@ import { ast, parse } from '@roku-road/bright'
 
 export const scanSource = (source: string, type = 'Program') => {
   const { value, lexErrors, tokens, parseErrors } = parse(source, type)
-  
+
   //...
-  
+
   return ast(value)
 }
+```
+
+
+##Example
+```brightscript
+'Library "ads"
+```
+
+Will produce
+
+#### Tokens
+```json
+ [ { loc: { start: { column: 1, line: 1 }, end: { column: 7, line: 1 } },
+           range: [ 0, 6 ],
+           type: 'LIBRARY',
+           value: 'Library' },
+         { loc: { start: { column: 9, line: 1 }, end: { column: 13, line: 1 } },
+           range: [ 8, 12 ],
+           type: 'STRING_LITERAL',
+           value: '"ads"' } ]
+```
+and value
+```json
+    { value:
+       { name: 'Program',
+         children:
+          { Declaration:
+             [ { name: 'LibraryStatement',
+                 children:
+                  { LIBRARY:
+                     [ { image: 'Library',
+                         startOffset: 0,
+                         endOffset: 6,
+                         startLine: 1,
+                         endLine: 1,
+                         startColumn: 1,
+                         endColumn: 7,
+                         tokenTypeIdx: 39 } ],
+                    path:
+                     [ { image: '"ads"',
+                         startOffset: 8,
+                         endOffset: 12,
+                         startLine: 1,
+                         endLine: 1,
+                         startColumn: 9,
+                         endColumn: 13,
+                         tokenTypeIdx: 79
+                           ],
+                            tokenTypeIdx: 79,
+                            categoryMatches: [],
+                            categoryMatchesMap: {},
+                            tokenName: 'STRING_LITERAL',
+                            isParent: false } } ] } } ],
+            EOF:
+             [ { image: '',
+                 startOffset: NaN,
+                 endOffset: NaN,
+                 startLine: NaN,
+                 endLine: NaN,
+                 startColumn: NaN,
+                 endColumn: NaN,
+                 tokenTypeIdx: 1,
+                 } ] } } }
+```
+
+### Errors
+Lets say we forget to put a new line after function signature declaration
+
+```brightscript
+function a end function
+```
+
+```json
+[ Error {
+           name: 'MismatchedTokenException',
+           message: 'Expecting token of type --> TERMINATOR <-- but found --> \'end function\' <--',
+           token:
+            { image: 'end function',
+              startOffset: 11,
+              endOffset: 22,
+              startLine: 1,
+              endLine: 1,
+              startColumn: 12,
+              endColumn: 23,
+              tokenTypeIdx: 29,
+              tokenType:
+               { PATTERN: [Function: pattern],
+                 tokenTypeIdx: 29,
+                 CATEGORIES: [],
+                 categoryMatches: [],
+                 categoryMatchesMap: {},
+                 tokenName: 'END_FUNCTION',
+                 isParent: false,
+                 LONGER_ALT:
+                  { PATTERN: /([A-Za-z_]+[A-Za-z0-9_]*)/,
+                    tokenTypeIdx: 3,
+                    CATEGORIES: [],
+                    categoryMatches: [],
+                    categoryMatchesMap: {},
+                    tokenName: 'IDENTIFIER',
+                    isParent: false },
+                 START_CHARS_HINT: [ 'E', 'e' ] } },
+           resyncedTokens: [],
+           context:
+            { ruleStack: [ 'Program', 'FunctionDeclaration', 'EndOfStatement' ],
+              ruleOccurrenceStack: [ 0, 0, 0 ] } } ]
+```
+
+##### Rendered as
+
+```
+    > 1 | function a end function
+        |            ^^^^^^^^^^^ Expecting token of type --> TERMINATOR <-- but found --> 'end function' <--
 ```
 
 
@@ -47,53 +160,3 @@ Bright consists of Tokens, Parser and Visitors. Please see *Chevrotain* project 
 
 ## Grammar
 Please check generated https://github.com/RokuRoad/bright/blob/develop/diagram/index.html for details
-
-
-## AST Nodes
-
-| Node | Properties |
-| --- | --- |
-| AdditionExpression |      [ 'left', 'right', 'operator' ]
-| Arguments |               [ 'param' ]
-| ArrayElement |            [ 'value', 'trailingComments' ]
-| ArrayExpression |         [ 'elements' ]
-| AssignmentExpression |    [ 'left', 'right', 'operator' ]
-| BlockStatement |          [ 'body' ]
-| BoxMemberExpression |     [ 'innerExpression' ]
-| CallExpression |          [ 'arguments', 'callee' ]
-| Comment |                 []
-| ConditionalElseStatement |[ 'body' ]
-| ConditionalIfStatement |  [ 'alternate', 'body', 'test' ]
-| DotMemberExpression |     [ 'operator', 'right' ]
-| ElseIfStatement |         [ 'test', 'body' ]
-| ElseStatement |           [ 'body' ]
-| EmptyStatement |          []
-| ForEachStatement | [ 'countExpression', 'body' ]
-| ForStatement | [ 'init', 'test', 'update', 'body' ]
-| FunctionDeclaration | [ 'id', 'ReturnType', 'params', 'body' ]
-| FunctionExpression | [ 'body', 'params', 'ReturnType' ]
-| Identifier | [ 'asType', 'name' ]
-| IfStatement | [ 'test', 'consequent', 'alternate' ]
-| LibraryStatement | []
-| Literal | []
-| LogicExpression | [ 'operator', 'left', 'right' ]
-| MemberExpression | [ 'computed', 'object', 'properties' ]
-| MultiplicationExpression | [ 'operator', 'left', 'right' ]
-| NextStatement | []
-| ObjectExpression | [ 'properties', 'trailingComments' ]
-| Parameter | [ 'name', 'TypeAnnotation', 'value' ]
-| ParameterList | [ 'arguments' ]
-| ParenthesisExpression | [ 'expression' ]
-| PostfixExpression | [ 'operator', 'argument' ]
-| PrintStatement | [ 'value' ]
-| Program | [ 'body' ]
-| Property | [ 'key', 'value' ]
-| RelationExpression | [ 'left', 'right', 'operator' ]
-| ReturnStatement | [ 'argument' ]
-| StopStatement | []
-| SubDeclaration | [ 'id', 'params', 'body', 'ReturnType' ]
-| SubExpression | [ 'body', 'params' ]
-| TypeAnnotation | []
-| UnaryExpression | [ 'operator', 'argument' ]
-| UnTypedIdentifier | [ 'name' ]
-| WhileStatement | [ 'test', 'body' ]
