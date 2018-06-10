@@ -2,7 +2,7 @@ import { createSyntaxDiagramsCode } from 'chevrotain'
 import { writeFileSync } from 'fs'
 import { resolve } from 'path'
 
-import { parserInstance } from '../src/RokuBRSParser'
+import { parserInstance } from '../src/Parser'
 
 describe('Diagrams', () => {
   test('Generate AST Productions', () => {

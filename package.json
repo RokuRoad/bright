@@ -10,7 +10,20 @@
     "test": "jest",
     "coverage": "jest --coverage"
   },
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [ "parser", "brs", "brightscript", "ast", "cst", "syntax", "roku", "language" ],
   "main": "dist/main.js",
+  "files": [
+    "dis/main.js",
+    "dist/ASTVisitor.js",
+    "dist/BaseVisitor.js",
+    "dist/Parser.js",
+    "dist/Tokens.js",
+    "dist/types.d.ts",
+    "dist/VisitorKeys.js"
+  ],
   "devDependencies": {
     "@types/jest": "23.0.0",
     "@types/lodash": "4.14.109",
@@ -26,7 +39,7 @@
     "typescript": "2.9.1"
   },
   "dependencies": {
-    "chevrotain": "3.4.0",
+    "chevrotain": "3.5.0",
     "lodash": "4.17.10"
   }
 }

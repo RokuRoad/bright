@@ -1,5 +1,5 @@
 import { filter, first, isArray, isUndefined, keys, map, mapKeys, NumericDictionary, values } from 'lodash'
-import { RokuBRSParser } from './RokuBRSParser'
+import { RokuBRSParser } from './Parser'
 import { ASTNode, BinaryASTNode, ContextProps, Location, NodeContext, Position, TokenContext } from './types'
 
 const parser = new RokuBRSParser([])
