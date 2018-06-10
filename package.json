@@ -21,7 +21,7 @@
     "dist/BaseVisitor.js",
     "dist/Parser.js",
     "dist/Tokens.js",
-    "dist/types.d.ts",
+    "dist/types",
     "dist/VisitorKeys.js"
   ],
   "devDependencies": {

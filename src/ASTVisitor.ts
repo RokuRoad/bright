@@ -1,7 +1,7 @@
 import { filter, first, isArray, last } from 'lodash'
 
 import { BaseVisitor } from './BaseVisitor'
-import { ASTNode, ContextProps, NodeContext, ProgramNode } from './types'
+import { ASTNode, ContextProps, NodeContext, ProgramNode } from './types/AST'
 
 export class ASTVisitor extends BaseVisitor {
   constructor() {

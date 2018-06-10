@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const lodash_1 = require("lodash");
-const RokuBRSParser_1 = require("./RokuBRSParser");
-const parser = new RokuBRSParser_1.RokuBRSParser([]);
+const Parser_1 = require("./Parser");
+const parser = new Parser_1.RokuBRSParser([]);
 const Visitor = parser.getBaseCstVisitorConstructor();
 class BaseVisitor extends Visitor {
     constructor() {
