@@ -1,4 +1,4 @@
-# New Document# Bright
+# Bright
 
 [![Build Status](https://travis-ci.com/RokuRoad/bright.svg?branch=develop)](https://travis-ci.com/RokuRoad/bright)
 [![Build Status](https://semaphoreci.com/api/v1/ialpert/bright/branches/develop/badge.svg)](https://semaphoreci.com/ialpert/bright)
@@ -34,15 +34,15 @@ export const scanSource = (source: string, type = 'Program') => {
 ```
 
 
-##Example
-```brightscript
-'Library "ads"
+## Example
+``` brightscript
+Library "ads"
 ```
 
 Will produce
 
 #### Tokens
-```json
+``` javascript
  [ { loc: { start: { column: 1, line: 1 }, end: { column: 7, line: 1 } },
            range: [ 0, 6 ],
            type: 'LIBRARY',
@@ -53,7 +53,7 @@ Will produce
            value: '"ads"' } ]
 ```
 and value
-```json
+```javascript
     { value:
        { name: 'Program',
          children:
@@ -103,7 +103,7 @@ Lets say we forget to put a new line after function signature declaration
 function a end function
 ```
 
-```json
+```javascript
 [ Error {
            name: 'MismatchedTokenException',
            message: 'Expecting token of type --> TERMINATOR <-- but found --> \'end function\' <--',
