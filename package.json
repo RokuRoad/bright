@@ -1,7 +1,7 @@
 {
   "name": "@roku-road/bright",
   "version": "0.5.0",
-  "private": true,
+  "public": true,
   "description": "Blazing fast parser for BrightScript that gives you ESTree like AST",
   "repository": "git@github.com:RokuRoad/bright.git",
   "license": "MIT",
