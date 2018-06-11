@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.com/RokuRoad/bright.svg?branch=develop)](https://travis-ci.com/RokuRoad/bright)
 [![Build Status](https://semaphoreci.com/api/v1/ialpert/bright/branches/develop/badge.svg)](https://semaphoreci.com/ialpert/bright)
 [![Coverage Status](https://coveralls.io/repos/github/RokuRoad/bright/badge.svg?branch=develop)](https://coveralls.io/github/RokuRoad/bright?branch=develop)
-[![dependencies Status](https://david-dm.org/RokuRoad/bright/status.svg)](https://david-dm.org/RokuRoad/bright)
+[![dependencies Status](https://david-dm.org/@roku-road/bright/status.svg)](https://david-dm.org/RokuRoad/bright)
 
 ## What is Bright?
 
