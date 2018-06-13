@@ -69,7 +69,7 @@ export class ASTVisitor extends BaseVisitor {
       return this.asNode(
         {
           ...this.Location(head, tail),
-          body: filter(body, (node) => node && node.type !== 'NEWLINE'),
+          body: filter(bodyArray, (node) => node && node.type !== 'NEWLINE'),
           type: 'BlockStatement'
         },
         ctx

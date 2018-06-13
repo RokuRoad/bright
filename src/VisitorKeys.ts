@@ -26,7 +26,7 @@ const visitorKeys = {
   FunctionExpression: [ 'body', 'params', 'ReturnType' ],
   Identifier: [ 'asType', 'name' ],
   IfStatement: [ 'test', 'consequent', 'alternate' ],
-  LibraryStatement: [],
+  LibraryStatement: [ 'path' ],
   Literal: [],
   LogicExpression: [ 'operator', 'left', 'right' ],
   MemberExpression: [ 'computed', 'object', 'properties' ],
