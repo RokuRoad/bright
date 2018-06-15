@@ -1,4 +1,4 @@
-import { filter, first, isArray, last } from 'lodash'
+import { filter, first, last } from 'lodash'
 
 import { BaseVisitor } from './BaseVisitor'
 import { ASTNode, ContextProps, NodeContext, ProgramNode } from './types/AST'
@@ -11,7 +11,7 @@ export class ASTVisitor extends BaseVisitor {
 
   public Program(ctx: NodeContext, props: ContextProps = { tokens: [] }): ASTNode {
     return this.mapArguments(ctx, ({ Declaration = [], Empty }: ProgramNode) => {
-      const body = isArray(Declaration) ? Declaration : [ Declaration ]
+      const body = this.asArray(Declaration)
 
       const head = body.length ? first(body) : first(Empty)
       const tail = body.length ? last(body) : last(Empty)
@@ -21,7 +21,7 @@ export class ASTVisitor extends BaseVisitor {
           ...this.Location(head, tail),
           body,
           comments: [],
-          // empty: Empty,
+          empty: Empty,
           sourceType: 'module',
           tokens: props ? props.tokens : [],
           type: 'Program'
@@ -52,10 +52,7 @@ export class ASTVisitor extends BaseVisitor {
 
   public FunctionDeclaration(ctx: NodeContext): ASTNode {
     return this.mapArguments(ctx, ({ FUNCTION, END_FUNCTION, id, ReturnType, params, body }) => {
-      return this.asNode(
-        { type: 'FunctionDeclaration', id, ReturnType, params, body, ...this.Location(FUNCTION, END_FUNCTION) },
-        ctx
-      )
+      return this.asNode({ type: 'FunctionDeclaration', id, ReturnType, params, body, ...this.Location(FUNCTION, END_FUNCTION) }, ctx)
     })
   }
 
@@ -69,7 +66,7 @@ export class ASTVisitor extends BaseVisitor {
       return this.asNode(
         {
           ...this.Location(head, tail),
-          body: filter(bodyArray, (node) => node && node.type !== 'NEWLINE'),
+          body: filter(bodyArray, node => node && node.type !== 'NEWLINE'),
           type: 'BlockStatement'
         },
         ctx
@@ -80,7 +77,7 @@ export class ASTVisitor extends BaseVisitor {
   public Statement(ctx: NodeContext): ASTNode {
     return this.mapArguments(ctx, ({ trailingComments, Empty, Statement }) => ({
       trailingComments,
-      ...Statement || Empty
+      ...(Statement || Empty)
     }))
   }
 
@@ -157,10 +154,7 @@ export class ASTVisitor extends BaseVisitor {
 
   public DimStatement(ctx: NodeContext): ASTNode {
     return this.mapArguments(ctx, ({ DIM, Identifier, ArrayExpression }) => {
-      return this.asNode(
-        { type: 'DimStatement', id: Identifier, ArrayExpression, ...this.Location(DIM, ArrayExpression) },
-        ctx
-      )
+      return this.asNode({ type: 'DimStatement', id: Identifier, ArrayExpression, ...this.Location(DIM, ArrayExpression) }, ctx)
     })
   }
 
@@ -198,14 +192,14 @@ export class ASTVisitor extends BaseVisitor {
 
   public ForStatement(ctx: NodeContext): ASTNode {
     return this.mapArguments(ctx, ({ FOR, END_FOR, init, test, update, body }) => {
-      const tail = first(filter([ END_FOR, last(this.asArray(body)) ]))
+      const tail = first(filter([END_FOR, last(this.asArray(body))]))
       return this.asNode({ type: 'ForStatement', init, test, update, body, ...this.Location(FOR, tail) }, ctx)
     })
   }
 
   public ForEachStatement(ctx: NodeContext): ASTNode {
     return this.mapArguments(ctx, ({ FOR, END_FOR, countExpression, body }) => {
-      const tail = first(filter([ END_FOR, last(this.asArray(body)) ]))
+      const tail = first(filter([END_FOR, last(this.asArray(body))]))
       return this.asNode({ type: 'ForEachStatement', countExpression, body, ...this.Location(FOR, tail) }, ctx)
     })
   }
@@ -272,10 +266,7 @@ export class ASTVisitor extends BaseVisitor {
 
   public FunctionExpression(ctx: NodeContext): ASTNode {
     return this.mapArguments(ctx, ({ FUNCTION, END_FUNCTION, body = [], params = [], ReturnType }) => {
-      return this.asNode(
-        { type: 'FunctionExpression', body, params, ReturnType, ...this.Location(FUNCTION, END_FUNCTION) },
-        ctx
-      )
+      return this.asNode({ type: 'FunctionExpression', body, params, ReturnType, ...this.Location(FUNCTION, END_FUNCTION) }, ctx)
     })
   }
 
@@ -298,18 +289,14 @@ export class ASTVisitor extends BaseVisitor {
   public AdditionExpression(ctx: NodeContext): ASTNode {
     return (
       this.singleArgument(ctx) ||
-      this.mapArguments(ctx, ({ ADDICTIVE_OPERATOR, left, right }) =>
-        this.flatListExpression('AdditionExpression', ADDICTIVE_OPERATOR, left, right)
-      )
+      this.mapArguments(ctx, ({ ADDICTIVE_OPERATOR, left, right }) => this.flatListExpression('AdditionExpression', ADDICTIVE_OPERATOR, left, right))
     )
   }
 
   public MultiplicationExpression(ctx: NodeContext): ASTNode {
     return (
       this.singleArgument(ctx) ||
-      this.mapArguments(ctx, ({ MULTI_OPERATOR, left, right }) =>
-        this.flatListExpression('MultiplicationExpression', MULTI_OPERATOR, left, right)
-      )
+      this.mapArguments(ctx, ({ MULTI_OPERATOR, left, right }) => this.flatListExpression('MultiplicationExpression', MULTI_OPERATOR, left, right))
     )
   }
 
@@ -320,9 +307,7 @@ export class ASTVisitor extends BaseVisitor {
   public RelationExpression(ctx: NodeContext): ASTNode {
     return (
       this.singleArgument(ctx) ||
-      this.mapArguments(ctx, ({ RELATIONAL_OPERATOR, left, right }) =>
-        this.flatListExpression('RelationExpression', RELATIONAL_OPERATOR, left, right)
-      )
+      this.mapArguments(ctx, ({ RELATIONAL_OPERATOR, left, right }) => this.flatListExpression('RelationExpression', RELATIONAL_OPERATOR, left, right))
     )
   }
 
@@ -350,9 +335,7 @@ export class ASTVisitor extends BaseVisitor {
   public LogicExpression(ctx: NodeContext): ASTNode {
     return (
       this.singleArgument(ctx) ||
-      this.mapArguments(ctx, ({ LOGIC_OPERATOR, left, right }) =>
-        this.flatListExpression('LogicExpression', LOGIC_OPERATOR, left, right)
-      )
+      this.mapArguments(ctx, ({ LOGIC_OPERATOR, left, right }) => this.flatListExpression('LogicExpression', LOGIC_OPERATOR, left, right))
     )
   }
 
@@ -360,10 +343,7 @@ export class ASTVisitor extends BaseVisitor {
     return (
       this.singleArgument(ctx) ||
       this.mapArguments(ctx, ({ UNARY, right }) => {
-        return this.asNode(
-          { type: 'UnaryExpression', operator: UNARY, argument: right, ...this.Location(UNARY, right) },
-          ctx
-        )
+        return this.asNode({ type: 'UnaryExpression', operator: UNARY, argument: right, ...this.Location(UNARY, right) }, ctx)
       })
     )
   }
@@ -378,10 +358,7 @@ export class ASTVisitor extends BaseVisitor {
     return (
       this.singleArgument(ctx) ||
       this.mapArguments(ctx, ({ POSTFIX, left }) => {
-        return this.asNode(
-          { type: 'PostfixExpression', operator: POSTFIX, argument: left, ...this.Location(left, POSTFIX) },
-          ctx
-        )
+        return this.asNode({ type: 'PostfixExpression', operator: POSTFIX, argument: left, ...this.Location(left, POSTFIX) }, ctx)
       })
     )
   }
@@ -389,7 +366,7 @@ export class ASTVisitor extends BaseVisitor {
   public CallExpression({ id, args }: NodeContext) {
     return {
       ...this.Location(id, args),
-      arguments: args,
+      args,
       callee: id,
       type: 'CallExpression'
     }
@@ -429,18 +406,6 @@ export class ASTVisitor extends BaseVisitor {
         } else {
           return this.ObjectMemberExpression({ id: property, properties: [] })
         }
-      })
-    )
-  }
-
-  public BoxMemberExpression(ctx: NodeContext): ASTNode {
-    return (
-      this.singleArgument(ctx) ||
-      this.mapArguments(ctx, ({ OPEN_BRACKET, CLOSE_BRACKET, innerExpression }) => {
-        return this.asNode(
-          { type: 'BoxMemberExpression', innerExpression, ...this.Location(OPEN_BRACKET, CLOSE_BRACKET) },
-          ctx
-        )
       })
     )
   }
@@ -501,10 +466,7 @@ export class ASTVisitor extends BaseVisitor {
 
   public ConditionalError(ctx: NodeContext): ASTNode {
     return this.mapArguments(ctx, ({ CONDITIONAL_ERROR }) => {
-      return this.asNode(
-        { type: 'ConditionalError', error: CONDITIONAL_ERROR, ...this.Location(CONDITIONAL_ERROR, CONDITIONAL_ERROR) },
-        ctx
-      )
+      return this.asNode({ type: 'ConditionalError', error: CONDITIONAL_ERROR, ...this.Location(CONDITIONAL_ERROR, CONDITIONAL_ERROR) }, ctx)
     })
   }
 
@@ -567,7 +529,7 @@ export class ASTVisitor extends BaseVisitor {
       return this.asNode(
         {
           ...this.Location(OPEN_PAREN, CLOSE_PAREN),
-          arguments: this.asArray(Parameter),
+          args: this.asArray(Parameter),
           type: 'ParameterList'
         },
         ctx
@@ -577,12 +539,9 @@ export class ASTVisitor extends BaseVisitor {
 
   public Parameter(ctx: NodeContext): ASTNode {
     return this.mapArguments(ctx, ({ Identifier, TypeAnnotation, value }) => {
-      const tail = last(filter([ Identifier, TypeAnnotation, value ]))
+      const tail = last(filter([Identifier, TypeAnnotation, value]))
 
-      return this.asNode(
-        { type: 'Parameter', name: Identifier, TypeAnnotation, value, ...this.Location(Identifier, tail) },
-        ctx
-      )
+      return this.asNode({ type: 'Parameter', name: Identifier, TypeAnnotation, value, ...this.Location(Identifier, tail) }, ctx)
     })
   }
 

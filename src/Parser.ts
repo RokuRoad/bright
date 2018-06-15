@@ -108,7 +108,7 @@ export class RokuBRSParser extends Parser {
 
   protected BlockStatement = this.RULE('BlockStatement', () => {
     this.MANY(() => {
-      this.OR([ { ALT: () => this.SUBRULE(this.Statement, body) }, { ALT: () => this.CONSUME(TERMINATOR) } ])
+      this.OR([{ ALT: () => this.SUBRULE(this.Statement, body) }, { ALT: () => this.CONSUME(TERMINATOR) }])
     })
   })
 
@@ -598,21 +598,15 @@ export class RokuBRSParser extends Parser {
 
   protected MemberChunkExpression = this.RULE('MemberChunkExpression', () => {
     this.OR([
-      { ALT: () => this.SUBRULE(this.BoxMemberExpression, { LABEL: 'property' }) },
+      { ALT: () => this.SUBRULE(this.ArrayExpression, { LABEL: 'property' }) },
       { ALT: () => this.SUBRULE(this.DotMemberExpression, { LABEL: 'property' }) }
     ])
 
     this.OPTION2(() => this.SUBRULE2(this.Arguments, { LABEL: 'args' }))
   })
 
-  protected BoxMemberExpression = this.RULE('BoxMemberExpression', () => {
-    this.CONSUME(OPEN_BRACKET)
-    this.SUBRULE(this.ExpressionStatement, { LABEL: 'innerExpression' })
-    this.CONSUME(CLOSE_BRACKET)
-  })
-
   protected DotMemberExpression = this.RULE('DotMemberExpression', () => {
-    this.OR1([ { ALT: () => this.CONSUME(PERIOD, operator) }, { ALT: () => this.CONSUME(ATTRIBUTE, operator) } ])
+    this.OR1([{ ALT: () => this.CONSUME(PERIOD, operator) }, { ALT: () => this.CONSUME(ATTRIBUTE, operator) }])
 
     this.OR2([
       { ALT: () => this.SUBRULE(this.Identifier, right) },
@@ -767,17 +761,17 @@ export class RokuBRSParser extends Parser {
 export const parserInstance = new RokuBRSParser([])
 
 const tokens = (list = []) => {
-  return list.map((t) => {
+  return list.map(t => {
     return {
       loc: { start: { column: t.startColumn, line: t.startLine }, end: { column: t.endColumn, line: t.endLine } },
-      range: [ t.startOffset, t.endOffset ],
+      range: [t.startOffset, t.endOffset],
       type: t.tokenType.tokenName,
       value: t.image
     }
   })
 }
 
-export function parse(source, entryPoint = 'Program'){
+export function parse(source, entryPoint = 'Program') {
   const lexingResult = BRSLexer.tokenize(source)
   parserInstance.input = lexingResult.tokens
 

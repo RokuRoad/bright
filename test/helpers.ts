@@ -20,7 +20,24 @@ export const scanSource = (source: string, type = 'Program') => {
   expect(tokens).toBeTruthy()
   expect(value).toBeTruthy()
 
-  return ast(value)
+  return { value, lexErrors, tokens, parseErrors }
+}
+
+/**
+ * Build AST tree from the file
+ * @param path Path to BrightScript file
+ */
+export const fileAST = (path: string, type = 'Program') => {
+  const source = readFileSync(path, 'utf8')
+  return sourceAST(source, type)
+}
+
+/**
+ * Build AST tree from the source
+ * @param path Path to BrightScript file
+ */
+export const sourceAST = (source: string, type = 'Program') => {
+  return ast(source, type)
 }
 
 /**

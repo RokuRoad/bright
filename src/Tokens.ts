@@ -24,11 +24,10 @@ const keyword = (words: string | string[], opts = {}) => {
   }
 
   const hint = term.substr(0, 1)
-  // tslint:disable-next-line:variable-name
-  const start_chars_hint =
+  const startHint =
     hint.toUpperCase() === hint.toLowerCase() ? [ hint.toUpperCase() ] : [ hint.toUpperCase(), hint.toLowerCase() ]
 
-  return createToken({ name, pattern, longer_alt: IDENTIFIER, start_chars_hint, ...opts })
+  return createToken({ name, pattern, longer_alt: IDENTIFIER, start_chars_hint: startHint, ...opts })
 }
 
 export const BASE_TYPE = createToken({ name: 'BASE_TYPE', pattern: Lexer.NA })

@@ -58,12 +58,6 @@ export class BaseVisitor extends Visitor {
     const range: [number, number] = [ null, null ]
     const loc = { start: { line: null, column: null }, end: { line: null, column: null } }
 
-    // if (head.loc === undefined || tail.loc === undefined) {
-    //   console.log({ head, tail })
-    //   console.trace()
-    //   throw new Error('Undefined location information in head or tail')
-    // }
-
     if (head.loc !== null) {
       loc.start = head.loc.start
     }
@@ -79,14 +73,6 @@ export class BaseVisitor extends Visitor {
     if (tail.range !== null) {
       range[1] = tail.range[1]
     }
-
-    // if (loc.start.line === null) {
-    //   throw new Error(`Start location unknown: ${head.type}`)
-    // }
-
-    // if (loc.end.line === null) {
-    //   throw new Error(`End location unknown: ${tail.type}`)
-    // }
 
     return { loc, range }
   }

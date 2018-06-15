@@ -1,4 +1,4 @@
-import { parse } from '../src/main'
+import { parse, ast } from '../src/main'
 
 import { error } from './helpers'
 
@@ -15,5 +15,14 @@ describe('Some Parsing errors', () => {
 
     expect(parseErrors.length).toEqual(1)
     expect(error(parseErrors[0], `function a end function`)).toBeTruthy()
+  })
+
+  it('Should throw an exception', () => {
+    expect(() => {
+      const { parseErrors } = ast(`function a end function`)
+
+      expect(parseErrors.length).toEqual(1)
+      expect(error(parseErrors[0], `function a end function`)).toBeTruthy()
+    }).toThrow()
   })
 })
