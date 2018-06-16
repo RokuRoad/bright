@@ -204,11 +204,11 @@ export class ASTVisitor extends BaseVisitor {
   }
 
   public ForStatement(ctx: NodeContext): ASTNode {
-    return this.mapArguments(ctx, ({ FOR, END_FOR, init, test, update, body, trailingComments }) => {
+    return this.mapArguments(ctx, ({ FOR, END_FOR, init, test, counter, update, body, trailingComments }) => {
       const tail = first(filter([END_FOR, last(this.asArray(body))]))
       trailingComments = this.hasComment(trailingComments)
 
-      return this.asNode({ type: 'ForStatement', init, test, update, body, trailingComments, ...this.Location(FOR, tail) }, ctx)
+      return this.asNode({ type: 'ForStatement', init, test, update, counter, body, trailingComments, ...this.Location(FOR, tail) }, ctx)
     })
   }
 
@@ -415,16 +415,7 @@ export class ASTVisitor extends BaseVisitor {
   }
 
   public MemberChunkExpression(ctx: NodeContext): ASTNode {
-    return (
-      this.singleArgument(ctx) ||
-      this.mapArguments(ctx, ({ property, args }) => {
-        if (args) {
-          return this.CallExpression({ id: property, args })
-        } else {
-          return this.ObjectMemberExpression({ id: property, properties: [] })
-        }
-      })
-    )
+    return this.singleNode(ctx)
   }
 
   public DotMemberExpression(ctx: NodeContext): ASTNode {
