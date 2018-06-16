@@ -5,7 +5,7 @@
 [![Build Status](https://travis-ci.com/RokuRoad/bright.svg?branch=master)](https://travis-ci.com/RokuRoad/@roku-road/bright)
 [![CircleCI](https://img.shields.io/circleci/project/github/RokuRoad/bright.svg?style=for-the-badge)](https://github.com/RokuRoad/bright)
 [![Coverage Status](https://codecov.io/gh/RokuRoad/bright/branch/master/graph/badge.svg)](https://codecov.io/gh/RokuRoad/bright)
-[![Dependency Status](https://david-dm.org/RokuRoad/@roku-road/bright.svg)](https://david-dm.org/RokuRoad/bright) [![Greenkeeper badge](https://badges.greenkeeper.io/RokuRoad/bright.svg)](https://greenkeeper.io/)
+[![Dependency Status](https://david-dm.org/RokuRoad/bright.svg)](https://david-dm.org/RokuRoad/bright) [![Greenkeeper badge](https://badges.greenkeeper.io/RokuRoad/bright.svg)](https://greenkeeper.io/)
 [![CodeFactor](https://www.codefactor.io/repository/github/RokuRoad/bright/badge)](https://www.codefactor.io/repository/github/RokuRoad/bright)
 ## What is Bright?
 
