@@ -1,4 +1,4 @@
-import { parse, ast } from '../src/main'
+import { ast, parse } from '../src/main'
 
 import { error } from './helpers'
 

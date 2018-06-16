@@ -1,5 +1,7 @@
 {
   "extends": ["tslint:recommended", "tslint-config-prettier"],
   "linterOptions": {},
-  "rules": {}
+  "rules": {
+    "interface-name": [true, "never-prefix"]
+  }
 }

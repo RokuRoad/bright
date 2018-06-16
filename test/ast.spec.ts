@@ -1,5 +1,4 @@
 import { fileAST, sourceAST } from './helpers'
-import { inspect } from 'util'
 
 describe('AST', () => {
   test('Should be able to Parse AST', () => {

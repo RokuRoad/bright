@@ -50,8 +50,8 @@ const visitorKeys = {
   SubDeclaration: ['id', 'params', 'body', 'ReturnType'],
   SubExpression: ['body', 'params'],
   TypeAnnotation: [],
-  UnaryExpression: ['operator', 'argument'],
   UnTypedIdentifier: ['name'],
+  UnaryExpression: ['operator', 'argument'],
   WhileStatement: ['test', 'body']
 }
 

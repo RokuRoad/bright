@@ -15,7 +15,10 @@ export interface ContextProps {
   tokens: Token[]
 }
 
-export interface Token {}
+export interface Token extends Location {
+  type: string
+  value: number | string
+}
 
 export interface NodeContext {
   [key: string]: any

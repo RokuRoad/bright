@@ -1,4 +1,5 @@
 import { EOF, IToken, Lexer, Parser } from 'chevrotain'
+import { Token } from './types/AST'
 
 import {
   ADDICTIVE_OPERATOR,
@@ -760,7 +761,7 @@ export class RokuBRSParser extends Parser {
 
 export const parserInstance = new RokuBRSParser([])
 
-const tokens = (list = []) => {
+const tokens = (list = []): Token[] => {
   return list.map(t => {
     return {
       loc: { start: { column: t.startColumn, line: t.startLine }, end: { column: t.endColumn, line: t.endLine } },
