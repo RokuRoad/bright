@@ -1,8 +1,8 @@
 # Bright
 
-[![Build Status](https://travis-ci.com/RokuRoad/bright.svg?branch=develop)](https://travis-ci.com/RokuRoad/bright)
-[![Build Status](https://semaphoreci.com/api/v1/ialpert/bright/branches/develop/badge.svg)](https://semaphoreci.com/ialpert/bright)
-[![Coverage Status](https://coveralls.io/repos/github/RokuRoad/bright/badge.svg?branch=develop)](https://coveralls.io/github/RokuRoad/bright?branch=develop)
+[![Build Status](https://travis-ci.com/RokuRoad/bright.svg?branch=master)](https://travis-ci.com/RokuRoad/bright)
+[![Build Status](https://semaphoreci.com/api/v1/ialpert/bright/branches/master/badge.svg)](https://semaphoreci.com/ialpert/bright)
+[![Coverage Status](https://coveralls.io/repos/github/RokuRoad/bright/badge.svg?branch=master)](https://coveralls.io/github/RokuRoad/bright?branch=master)
 [![dependencies Status](https://david-dm.org/@roku-road/bright/status.svg)](https://david-dm.org/RokuRoad/bright) [![Greenkeeper badge](https://badges.greenkeeper.io/RokuRoad/bright.svg)](https://greenkeeper.io/)
 
 ## What is Bright?
@@ -159,4 +159,4 @@ Bright consists of Tokens, Parser and Visitors. Please see *Chevrotain* project 
 | visitorKeys   | Map for walking though the tree (to avoid blind iteration) |
 
 ## Grammar
-Please check generated https://github.com/RokuRoad/bright/blob/develop/diagram/index.html for details
+Please check generated https://github.com/RokuRoad/bright/blob/master/diagram/index.html for details
