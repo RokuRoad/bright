@@ -762,10 +762,12 @@ export class RokuBRSParser extends Parser {
 export const parserInstance = new RokuBRSParser([])
 
 const tokens = (list = []): Token[] => {
-  return list.map(t => {
+  return list.map((t: IToken) => {
+    const range: [number, number] = [t.startOffset, t.endOffset]
+
     return {
       loc: { start: { column: t.startColumn, line: t.startLine }, end: { column: t.endColumn, line: t.endLine } },
-      range: [t.startOffset, t.endOffset],
+      range,
       type: t.tokenType.tokenName,
       value: t.image
     }
