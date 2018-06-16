@@ -1,9 +1,7 @@
-import { filter, first, last, map } from 'lodash'
+import { filter, first, last } from 'lodash'
 
 import { BaseVisitor } from './BaseVisitor'
 import { ASTNode, ContextProps, NodeContext, ProgramNode } from './types/AST'
-
-const before = (element: ASTNode, threshold: number) => ({ loc }) => loc.start.line >= threshold && loc.start.line <= element.loc.start.line
 
 export class ASTVisitor extends BaseVisitor {
   constructor() {
@@ -12,30 +10,17 @@ export class ASTVisitor extends BaseVisitor {
   }
 
   public Program(ctx: NodeContext, props: ContextProps = { tokens: [] }): ASTNode {
-    return this.mapArguments(ctx, ({ Declaration = [], Empty }: ProgramNode) => {
-      let body = this.asArray(Declaration)
+    return this.mapArguments(ctx, ({ Declaration = [] }: ProgramNode) => {
+      const body = this.asArray(Declaration)
 
-      const head = body.length ? first(body) : first(Empty)
-      const tail = body.length ? last(body) : last(Empty)
-
-      const comments = filter(Empty, ({ type }) => type === 'Comment')
-
-      let threshold = 0
-
-      body = map(body, element => {
-        const headComments = filter(comments, before(element, threshold))
-
-        element.headComments = headComments
-        threshold = element.loc.end.line
-
-        return element
-      })
+      const head = first(body)
+      const tail = last(body)
 
       return this.asNode(
         {
           ...this.Location(head, tail),
           body,
-          comments,
+          comments: [],
           sourceType: 'module',
           tokens: props ? props.tokens : [],
           type: 'Program'

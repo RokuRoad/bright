@@ -97,7 +97,7 @@ export class RokuBRSParser extends Parser {
         { ALT: () => this.SUBRULE(this.LibraryStatement, Declaration) },
         { ALT: () => this.SUBRULE(this.SubDeclaration, Declaration) },
         { ALT: () => this.SUBRULE(this.ConditionalCompilationStatement, Declaration) },
-        { ALT: () => this.SUBRULE(this.EmptyStatement, Empty) },
+        { ALT: () => this.SUBRULE(this.EmptyStatement, Declaration) },
         { ALT: () => this.SUBRULE(this.Comment, Declaration) }
       ])
     })
