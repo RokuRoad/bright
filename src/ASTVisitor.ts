@@ -216,12 +216,10 @@ export class ASTVisitor extends BaseVisitor {
   }
 
   public ForStatement(ctx: NodeContext): ASTNode {
-    return this.mapArguments(ctx, ({ FOR, END_FOR, init, test, update, body }) => {
+    return this.mapArguments(ctx, ({ FOR, END_FOR, init, test, update, body, trailingComments }) => {
       const tail = first(filter([END_FOR, last(this.asArray(body))]))
 
-      console.log(ctx)
-
-      return this.asNode({ type: 'ForStatement', init, test, update, body, ...this.Location(FOR, tail) }, ctx)
+      return this.asNode({ type: 'ForStatement', init, test, update, body, trailingComments, ...this.Location(FOR, tail) }, ctx)
     })
   }
 

@@ -26,9 +26,9 @@ describe('AST', () => {
     }).not.toThrow()
   })
 
-  test.only('Should be able parse inline AST with comments', () => {
+  test('Should be able parse inline AST with comments', () => {
     expect(() => {
-      const ast = sourceAST(`
+      sourceAST(`
       ' /**
       '  * @member intersection
       '  * @memberof module:rodash
