@@ -1,6 +1,6 @@
 import { files, scanFile } from './helpers'
 
-describe('Asset tests', () => {
+describe.skip('Asset tests', () => {
   files(__dirname + '/assets/**/*.brs').forEach((path: string) => {
     test(path, () => {
       expect(scanFile(path)).toBeTruthy()

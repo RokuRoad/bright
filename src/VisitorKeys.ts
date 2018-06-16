@@ -16,7 +16,7 @@ const visitorKeys = {
   ConditionalConst: ['operator', 'left', 'right'],
   ConditionalElseIfStatement: ['alternate', 'body', 'test'],
   ConditionalElseStatement: ['body'],
-  ConditionalError: ['CONDITIONAL_ERROR'],
+  ConditionalError: ['error'],
   ConditionalIfStatement: ['alternate', 'body', 'test'],
   DimStatement: ['id', 'ArrayExpression'],
   DotMemberExpression: ['operator', 'right'],

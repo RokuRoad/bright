@@ -1,7 +1,9 @@
-import { filter, first, last } from 'lodash'
+import { filter, first, last, map } from 'lodash'
 
 import { BaseVisitor } from './BaseVisitor'
 import { ASTNode, ContextProps, NodeContext, ProgramNode } from './types/AST'
+
+const before = (element: ASTNode, threshold: number) => ({ loc }) => loc.start.line >= threshold && loc.start.line <= element.loc.start.line
 
 export class ASTVisitor extends BaseVisitor {
   constructor() {
@@ -11,17 +13,29 @@ export class ASTVisitor extends BaseVisitor {
 
   public Program(ctx: NodeContext, props: ContextProps = { tokens: [] }): ASTNode {
     return this.mapArguments(ctx, ({ Declaration = [], Empty }: ProgramNode) => {
-      const body = this.asArray(Declaration)
+      let body = this.asArray(Declaration)
 
       const head = body.length ? first(body) : first(Empty)
       const tail = body.length ? last(body) : last(Empty)
+
+      const comments = filter(Empty, ({ type }) => type === 'Comment')
+
+      let threshold = 0
+
+      body = map(body, element => {
+        const headComments = filter(comments, before(element, threshold))
+
+        element.headComments = headComments
+        threshold = element.loc.end.line
+
+        return element
+      })
 
       return this.asNode(
         {
           ...this.Location(head, tail),
           body,
-          comments: [],
-          empty: Empty,
+          comments,
           sourceType: 'module',
           tokens: props ? props.tokens : [],
           type: 'Program'
@@ -51,8 +65,8 @@ export class ASTVisitor extends BaseVisitor {
   }
 
   public FunctionDeclaration(ctx: NodeContext): ASTNode {
-    return this.mapArguments(ctx, ({ FUNCTION, END_FUNCTION, id, ReturnType, params, body }) => {
-      return this.asNode({ type: 'FunctionDeclaration', id, ReturnType, params, body, ...this.Location(FUNCTION, END_FUNCTION) }, ctx)
+    return this.mapArguments(ctx, ({ FUNCTION, END_FUNCTION, id, ReturnType, params, body, trailingComments }) => {
+      return this.asNode({ type: 'FunctionDeclaration', id, ReturnType, params, trailingComments, body, ...this.Location(FUNCTION, END_FUNCTION) }, ctx)
     })
   }
 
@@ -75,10 +89,17 @@ export class ASTVisitor extends BaseVisitor {
   }
 
   public Statement(ctx: NodeContext): ASTNode {
-    return this.mapArguments(ctx, ({ trailingComments, Empty, Statement }) => ({
-      trailingComments,
-      ...(Statement || Empty)
-    }))
+    return this.mapArguments(ctx, ({ trailingComments, Empty, Statement }) => {
+      const node = this.asNode(
+        {
+          trailingComments,
+          ...(Statement || Empty)
+        },
+        ctx
+      )
+
+      return node
+    })
   }
 
   public ExpressionStatement(ctx: NodeContext): ASTNode {
@@ -86,7 +107,11 @@ export class ASTVisitor extends BaseVisitor {
   }
 
   public EmptyStatement(ctx: NodeContext): ASTNode {
-    return this.mapArguments(ctx, ({ NEWLINE }) => {
+    return this.mapArguments(ctx, ({ NEWLINE, trailingComments }) => {
+      if (trailingComments) {
+        return trailingComments
+      }
+
       return { type: 'EmptyStatement', ...this.Location(NEWLINE, NEWLINE) }
     })
   }
@@ -193,14 +218,18 @@ export class ASTVisitor extends BaseVisitor {
   public ForStatement(ctx: NodeContext): ASTNode {
     return this.mapArguments(ctx, ({ FOR, END_FOR, init, test, update, body }) => {
       const tail = first(filter([END_FOR, last(this.asArray(body))]))
+
+      console.log(ctx)
+
       return this.asNode({ type: 'ForStatement', init, test, update, body, ...this.Location(FOR, tail) }, ctx)
     })
   }
 
   public ForEachStatement(ctx: NodeContext): ASTNode {
-    return this.mapArguments(ctx, ({ FOR, END_FOR, countExpression, body }) => {
+    return this.mapArguments(ctx, ({ FOR, END_FOR, countExpression, body, trailingComments, counter }) => {
       const tail = first(filter([END_FOR, last(this.asArray(body))]))
-      return this.asNode({ type: 'ForEachStatement', countExpression, body, ...this.Location(FOR, tail) }, ctx)
+
+      return this.asNode({ type: 'ForEachStatement', countExpression, trailingComments, counter, body, ...this.Location(FOR, tail) }, ctx)
     })
   }
 
@@ -363,7 +392,7 @@ export class ASTVisitor extends BaseVisitor {
     )
   }
 
-  public CallExpression({ id, args }: NodeContext) {
+  public CallExpression({ id, args }: NodeContext): ASTNode {
     return {
       ...this.Location(id, args),
       args,
