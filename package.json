@@ -8,6 +8,8 @@
   "scripts": {
     "build": "tsc",
     "test": "jest",
+    "release": "tsc & semantic-release",
+    "prepublishOnly": "tsc",
     "coverage": "jest --coverage"
   },
   "publishConfig": {
@@ -20,6 +22,8 @@
     "ast",
     "cst",
     "syntax",
+    "roku-development",
+    "grammar",
     "roku",
     "language"
   ],
@@ -34,6 +38,7 @@
     "dist/VisitorKeys.js"
   ],
   "devDependencies": {
+    "semantic-release": "15.5.4",
     "@types/jest": "23.1.0",
     "@types/lodash": "4.14.109",
     "@types/node": "^10.3.3",
