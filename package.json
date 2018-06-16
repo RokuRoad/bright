@@ -8,7 +8,7 @@
   "scripts": {
     "build": "tsc",
     "test": "jest",
-    "release": "tsc & semantic-release",
+    "release": "tsc && semantic-release",
     "prepublishOnly": "tsc",
     "coverage": "jest --coverage"
   },
