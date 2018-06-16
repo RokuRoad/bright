@@ -51,6 +51,7 @@ export class ASTVisitor extends BaseVisitor {
 
   public FunctionDeclaration(ctx: NodeContext): ASTNode {
     return this.mapArguments(ctx, ({ FUNCTION, END_FUNCTION, id, ReturnType, params, body, trailingComments }) => {
+      trailingComments = this.hasComment(trailingComments)
       return this.asNode({ type: 'FunctionDeclaration', id, ReturnType, params, trailingComments, body, ...this.Location(FUNCTION, END_FUNCTION) }, ctx)
     })
   }
@@ -75,6 +76,7 @@ export class ASTVisitor extends BaseVisitor {
 
   public Statement(ctx: NodeContext): ASTNode {
     return this.mapArguments(ctx, ({ trailingComments, Empty, Statement }) => {
+      trailingComments = this.hasComment(trailingComments)
       const node = this.asNode(
         {
           trailingComments,
@@ -154,6 +156,7 @@ export class ASTVisitor extends BaseVisitor {
 
   public ArrayElement(ctx: NodeContext): ASTNode {
     return this.mapArguments(ctx, ({ value, trailingComments = [] }) => {
+      trailingComments = this.hasComment(trailingComments)
       return this.asNode({ type: 'ArrayElement', value, trailingComments, ...this.Location(value, value) }, ctx)
     })
   }
@@ -203,6 +206,7 @@ export class ASTVisitor extends BaseVisitor {
   public ForStatement(ctx: NodeContext): ASTNode {
     return this.mapArguments(ctx, ({ FOR, END_FOR, init, test, update, body, trailingComments }) => {
       const tail = first(filter([END_FOR, last(this.asArray(body))]))
+      trailingComments = this.hasComment(trailingComments)
 
       return this.asNode({ type: 'ForStatement', init, test, update, body, trailingComments, ...this.Location(FOR, tail) }, ctx)
     })
@@ -211,6 +215,7 @@ export class ASTVisitor extends BaseVisitor {
   public ForEachStatement(ctx: NodeContext): ASTNode {
     return this.mapArguments(ctx, ({ FOR, END_FOR, countExpression, body, trailingComments, counter }) => {
       const tail = first(filter([END_FOR, last(this.asArray(body))]))
+      trailingComments = this.hasComment(trailingComments)
 
       return this.asNode({ type: 'ForEachStatement', countExpression, trailingComments, counter, body, ...this.Location(FOR, tail) }, ctx)
     })
@@ -500,6 +505,7 @@ export class ASTVisitor extends BaseVisitor {
   public ConditionalElseIfStatement(ctx: NodeContext): ASTNode {
     return this.mapArguments(ctx, ({ CONDITIONAL_ELSE_IF, test, body, trailingComments = [] }) => {
       const tail = last(this.asArray(body))
+      trailingComments = this.hasComment(trailingComments)
 
       return this.asNode(
         {
@@ -580,5 +586,13 @@ export class ASTVisitor extends BaseVisitor {
     }
 
     return this.asNode({ type: 'Comment', value, ...this.Location(COMMENT, COMMENT) }, ctx)
+  }
+
+  public hasComment(trailingComments) {
+    if (trailingComments && trailingComments.type === 'Comment') {
+      return trailingComments
+    }
+
+    return ''
   }
 }

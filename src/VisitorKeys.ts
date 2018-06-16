@@ -17,7 +17,7 @@ const visitorKeys = {
   ConditionalElseIfStatement: ['alternate', 'body', 'test'],
   ConditionalElseStatement: ['body'],
   ConditionalError: ['error'],
-  ConditionalIfStatement: ['alternate', 'body', 'test'],
+  ConditionalIfStatement: ['alternate', 'body', 'test', 'trailingComments'],
   DimStatement: ['id', 'ArrayExpression'],
   DotMemberExpression: ['operator', 'right'],
   ElseIfStatement: ['test', 'body', 'trailingComments'],
