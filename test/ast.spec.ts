@@ -68,4 +68,27 @@ describe('AST', () => {
       // print(ast)
     }).not.toThrow()
   })
+
+  test.only('Should be able parse reserved words', () => {
+    expect(() => {
+      sourceAST(
+        `
+      m.stop.findNode("label")
+
+      a = {
+        in:5
+        stop:10
+        mod: 5
+        next: function(mod)
+                print b
+              end function
+      }
+
+      mod = "stop"
+
+      `,
+        'BlockStatement'
+      )
+    }).not.toThrow()
+  })
 })

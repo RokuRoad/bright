@@ -46,6 +46,7 @@ import {
   LITERAL,
   LOGIC_OPERATOR,
   LONGINTEGER,
+  MOD,
   MULTI_OPERATOR,
   NEWLINE,
   NEXT,
@@ -663,6 +664,8 @@ export class RokuBRSParser extends Parser {
       this.cacheReservedWord ||
         (this.cacheReservedWord = [
           { ALT: () => this.CONSUME(END) },
+          { ALT: () => this.CONSUME(IN) },
+          { ALT: () => this.CONSUME(MOD) },
           { ALT: () => this.CONSUME(OBJECT) },
           { ALT: () => this.CONSUME(STOP) },
           { ALT: () => this.CONSUME(NEXT) },
@@ -789,3 +792,4 @@ export function parse(source, entryPoint = 'Program') {
     value
   }
 }
+,

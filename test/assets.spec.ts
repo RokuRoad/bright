@@ -1,8 +1,9 @@
+import { basename } from 'path'
 import { files, scanFile } from './helpers'
 
-describe('Asset tests', () => {
+describe.only('Asset tests', () => {
   files(__dirname + '/assets/**/*.brs').forEach((path: string) => {
-    test(path, () => {
+    test(basename(path, '.brs'), () => {
       expect(scanFile(path)).toBeTruthy()
     })
   })
