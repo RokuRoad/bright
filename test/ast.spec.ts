@@ -1,4 +1,4 @@
-import { fileAST, sourceAST } from './helpers'
+import { fileAST, sourceAST /* , print */ } from './helpers'
 
 describe('AST', () => {
   test('Should be able to Parse AST', () => {
@@ -58,6 +58,14 @@ describe('AST', () => {
       `)
 
       // console.log(inspect(ast, false, null, true))
+    }).not.toThrow()
+  })
+
+  test('Should be able parse inline AST #3', () => {
+    expect(() => {
+      /* const ast =  */ sourceAST('m.top.findNode("label")', 'BlockStatement')
+
+      // print(ast)
     }).not.toThrow()
   })
 })

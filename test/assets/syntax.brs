@@ -1,5 +1,5 @@
 function a()
-  a$="a rose is a rose"
+  a$ ="a rose is a rose"
   b1=1.23
   x=x-z1
 
@@ -10,9 +10,6 @@ function a()
     aa.delete(n)
   end for
 end function
-
-
-
 
 
 function gotoStatement()
