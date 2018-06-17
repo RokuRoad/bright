@@ -336,6 +336,7 @@ export class RokuBRSParser extends Parser {
     this.SUBRULE(this.Identifier, { LABEL: 'label' })
     this.CONSUME(COLON)
     this.CONSUME(NEWLINE)
+    this.SUBRULE(this.Statement, { LABEL: 'body' })
   })
 
   protected LibraryStatement = this.RULE('LibraryStatement', () => {

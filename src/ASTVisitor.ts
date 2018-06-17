@@ -143,8 +143,8 @@ export class ASTVisitor extends BaseVisitor {
   }
 
   public LabeledStatement(ctx: NodeContext): ASTNode {
-    return this.mapArguments(ctx, ({ COLON, label }) => {
-      return this.asNode({ type: 'LabeledStatement', label, ...this.Location(label, COLON) }, ctx)
+    return this.mapArguments(ctx, ({ COLON, label, body }) => {
+      return this.asNode({ type: 'LabeledStatement', label, body, ...this.Location(label, COLON) }, ctx)
     })
   }
 
@@ -415,7 +415,16 @@ export class ASTVisitor extends BaseVisitor {
   }
 
   public MemberChunkExpression(ctx: NodeContext): ASTNode {
-    return this.singleNode(ctx)
+    return (
+      this.singleArgument(ctx) ||
+      this.mapArguments(ctx, ({ property, args }) => {
+        if (args) {
+          return this.CallExpression({ id: property, args })
+        } else {
+          return this.ObjectMemberExpression({ id: property, properties: [] })
+        }
+      })
+    )
   }
 
   public DotMemberExpression(ctx: NodeContext): ASTNode {
