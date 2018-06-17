@@ -14,6 +14,17 @@ The motivation behind this project is to build solid platform and base for other
 
 This project uses awesome https://github.com/SAP/chevrotain parser engine, performance tests : https://sap.github.io/chevrotain/performance/
 
+
+### Performance
+
+While there is no official metrics yet, during development it continuesly got tested on ~800 random open source project files from Github.
+
+![Tokei](https://github.com/RokuRoad/bright/blob/master/docs/tokei.png)
+
+Thanks, [Tokei](https://github.com/Aaronepower/tokei)
+
+![Tests](https://github.com/RokuRoad/bright/blob/master/docs/tests.png)
+
 Project is written in TypeScript and compiles to JS
 
 ## Installation
