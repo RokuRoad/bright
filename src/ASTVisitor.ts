@@ -476,8 +476,8 @@ export class ASTVisitor extends BaseVisitor {
   }
 
   public ConditionalConst(ctx: NodeContext): ASTNode {
-    return this.mapArguments(ctx, ({ left, right, operator }) => {
-      return this.flatListExpression('ConditionalConst', operator, left, right)
+    return this.mapArguments(ctx, ({ CONDITIONAL_CONST, assignment }) => {
+      return this.asNode({ type: 'ConditionalConst', assignment, ...this.Location(CONDITIONAL_CONST, assignment) }, ctx)
     })
   }
 
