@@ -2,7 +2,7 @@ import { codeFrameColumns } from '@babel/code-frame'
 import { readFileSync } from 'fs'
 import { sync } from 'glob'
 import { ast, parse } from '../src/main'
-
+import { inspect } from 'util'
 /**
  * Read source code and produce parsed information
  *
@@ -71,6 +71,10 @@ export const error = ({ message, token }, source: string): string => {
   }
 
   return codeFrameColumns(source, location, { highlightCode: true, message })
+}
+
+export const print = (value: any) => {
+  console.log(inspect(value, false, null, true))
 }
 
 describe('Testing utils', () => {
