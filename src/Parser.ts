@@ -792,4 +792,3 @@ export function parse(source, entryPoint = 'Program') {
     value
   }
 }
-,
