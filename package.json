@@ -1,6 +1,6 @@
 {
   "name": "@roku-road/bright",
-  "version": "1.0.4",
+  "version": "1.1.0",
   "public": true,
   "description": "Blazing fast parser for BrightScript that gives you ESTree like AST",
   "repository": "git@github.com:RokuRoad/bright.git",
@@ -9,7 +9,7 @@
     "build": "tsc",
     "lint": "tslint -t codeFrame 'src/**/*.ts' 'test/**/*.ts'",
     "test": "jest",
-    "release": "tsc && semantic-release",
+    "release": "tsc && semantic-release --no-ci",
     "prepublishOnly": "tsc",
     "coverage": "jest --coverage"
   },
