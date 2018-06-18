@@ -69,7 +69,7 @@ describe('AST', () => {
     }).not.toThrow()
   })
 
-  test.only('Should be able parse reserved words', () => {
+  test('Should be able parse reserved words', () => {
     expect(() => {
       sourceAST(
         `

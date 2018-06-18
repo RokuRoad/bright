@@ -1,4 +1,5 @@
 import { ASTVisitor } from './ASTVisitor'
+import { BaseASTWalker } from './ASTWalker'
 import { parse, RokuBRSParser } from './Parser'
 import { ALL_TOKENS } from './Tokens'
 
@@ -34,4 +35,4 @@ const ast = (source: string, type = 'Program') => {
   return tree
 }
 
-export { RokuBRSParser, ASTVisitor, ALL_TOKENS, parse, ast, visitorKeys }
+export { RokuBRSParser, ASTVisitor, ALL_TOKENS, parse, ast, visitorKeys, BaseASTWalker }
