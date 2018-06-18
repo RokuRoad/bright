@@ -30,13 +30,7 @@
   ],
   "main": "dist/main.js",
   "files": [
-    "dis/main.js",
-    "dist/ASTVisitor.js",
-    "dist/BaseVisitor.js",
-    "dist/Parser.js",
-    "dist/Tokens.js",
-    "dist/types",
-    "dist/VisitorKeys.js"
+    "dist"
   ],
   "devDependencies": {
     "semantic-release": "15.5.4",
