@@ -1,5 +1,5 @@
 import { ASTVisitor } from './ASTVisitor'
-import { BaseASTWalker } from './ASTWalker'
+import { BaseASTWalker } from './BaseASTWalker'
 import { parse, RokuBRSParser } from './Parser'
 import { ALL_TOKENS } from './Tokens'
 
