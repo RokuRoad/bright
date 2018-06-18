@@ -1,5 +1,5 @@
 import { EOF, IToken, Lexer, Parser } from 'chevrotain'
-import { Token } from './types/AST'
+import { Token } from './AST'
 
 import {
   ADDICTIVE_OPERATOR,

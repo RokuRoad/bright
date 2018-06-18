@@ -1,7 +1,7 @@
 import { filter, first, last } from 'lodash'
 
+import { ASTNode, ContextProps, NodeContext, ProgramNode } from './AST'
 import { BaseVisitor } from './BaseVisitor'
-import { ASTNode, ContextProps, NodeContext, ProgramNode } from './types/AST'
 
 /**
  *

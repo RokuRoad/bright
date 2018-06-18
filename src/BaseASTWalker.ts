@@ -1,5 +1,5 @@
-import { ASTNode } from './types/AST'
-import { ASTWalker } from './types/ASTWalker'
+import { ASTNode } from './AST'
+import { ASTWalker } from './ASTWalker'
 
 import { isArray, map, zipObject } from 'lodash'
 import { visitorKeys } from './VisitorKeys'
