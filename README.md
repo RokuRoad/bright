@@ -2,7 +2,7 @@
 
 [![npm version](https://img.shields.io/npm/v/@roku-road/bright.svg)](https://www.npmjs.com/package/@roku-road/bright)
 [![Downloads/month](https://img.shields.io/npm/dm/@roku-road/bright.svg)](http://www.npmtrends.com/@roku-road/bright)
-[![Build Status](https://travis-ci.com/RokuRoad/bright.svg?branch=master)](https://travis-ci.com/RokuRoad/@roku-road/bright)
+[![Build Status](https://travis-ci.com/RokuRoad/bright.svg?branch=master)](https://travis-ci.com/RokuRoad/bright)
 [![CircleCI](https://img.shields.io/circleci/project/github/RokuRoad/bright.svg?style=for-the-badge)](https://github.com/RokuRoad/bright)
 [![Coverage Status](https://codecov.io/gh/RokuRoad/bright/branch/master/graph/badge.svg)](https://codecov.io/gh/RokuRoad/bright)
 [![Dependency Status](https://david-dm.org/RokuRoad/bright.svg)](https://david-dm.org/RokuRoad/bright) [![Greenkeeper badge](https://badges.greenkeeper.io/RokuRoad/bright.svg)](https://greenkeeper.io/)
