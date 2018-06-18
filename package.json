@@ -30,7 +30,7 @@
   ],
   "main": "dist/main.js",
   "files": [
-    "dist"
+    "dist/*.js"
   ],
   "devDependencies": {
     "semantic-release": "15.5.4",
