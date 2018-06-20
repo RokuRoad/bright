@@ -9,8 +9,7 @@
 [![CodeFactor](https://www.codefactor.io/repository/github/RokuRoad/bright/badge)](https://www.codefactor.io/repository/github/RokuRoad/bright)
 ## What is Bright?
 
-Blazing fast parser for BrightScript that gives you ESTree like AST. Sort of.
-The motivation behind this project is to build solid platform and base for other development tools in Roku world. This parser takes .brs files and build AST in form of ESTree like structure that could be used with ESLit, Prettier or other tools for linting, refactoring and formatting.
+Blazing fast parser for BrightScript that gives you ESTree like AST. Sort of. The motivation behind this project is to build solid platform and base for other development tools in Roku world. This parser takes .brs files and builds AST in form of ESTree like structure that could be used with ESLint, Prettier or other tools for linting, refactoring and formatting.
 
 This project uses awesome https://github.com/SAP/chevrotain parser engine, performance tests : https://sap.github.io/chevrotain/performance/
 
