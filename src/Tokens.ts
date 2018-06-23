@@ -10,12 +10,12 @@ export const IDENTIFIER = createToken({ name: 'IDENTIFIER', pattern: /([A-Za-z_]
 
 const keyword = (words: string | string[], opts = {}) => {
   if (!Array.isArray(words)) {
-    words = [ words ]
+    words = [words]
   }
 
   const term = words[0].toLowerCase()
 
-  const name = words.map((word) => word.toUpperCase()).join('_')
+  const name = words.map(word => word.toUpperCase()).join('_')
   const re = new RegExp(`\\b${words.join('[ \\t]*')}\\b`, 'iy')
 
   const pattern = (text: string, startOffset: number) => {
@@ -24,10 +24,9 @@ const keyword = (words: string | string[], opts = {}) => {
   }
 
   const hint = term.substr(0, 1)
-  const startHint =
-    hint.toUpperCase() === hint.toLowerCase() ? [ hint.toUpperCase() ] : [ hint.toUpperCase(), hint.toLowerCase() ]
+  const startHint = hint.toUpperCase() === hint.toLowerCase() ? [hint.toUpperCase()] : [hint.toUpperCase(), hint.toLowerCase()]
 
-  return createToken({ name, pattern, longer_alt: IDENTIFIER, start_chars_hint: startHint, ...opts })
+  return createToken({ name, pattern, longer_alt: IDENTIFIER, start_chars_hint: startHint, line_breaks: false, ...opts })
 }
 
 export const BASE_TYPE = createToken({ name: 'BASE_TYPE', pattern: Lexer.NA })
@@ -52,27 +51,27 @@ export const ADDICTIVE_OPERATOR = createToken({
   pattern: Lexer.NA
 })
 
-export const ATTRIBUTE = createToken({ name: 'ATTRIBUTE', pattern: '@' })
-export const BACK_SLASH = createToken({ name: 'BACK_SLASH', pattern: '\\', categories: MULTI_OPERATOR })
+export const ATTRIBUTE = createToken({ name: 'ATTRIBUTE', pattern: '@', line_breaks: false })
+export const BACK_SLASH = createToken({ name: 'BACK_SLASH', pattern: '\\', categories: MULTI_OPERATOR, line_breaks: false })
 
-export const COMMENT_QUOTE = createToken({ name: 'COMMENT_QUOTE', pattern: /'[^\n\r]*/ })
-export const COMMENT_REM = createToken({ name: 'COMMENT_REM', pattern: /\b(rem|REM|Rem)\b[^\n\r]*/i })
+export const COMMENT_QUOTE = createToken({ name: 'COMMENT_QUOTE', pattern: /'[^\n\r]*/, line_breaks: false })
+export const COMMENT_REM = createToken({ name: 'COMMENT_REM', pattern: /\b(rem|REM|Rem)\b[^\n\r]*/i, line_breaks: false })
 
-export const CONDITIONAL_IF = createToken({ name: 'CONDITIONAL_IF', pattern: /#\bif\b/ })
-export const CONDITIONAL_ELSE = createToken({ name: 'CONDITIONAL_ELSE', pattern: /#\else\b/ })
+export const CONDITIONAL_IF = createToken({ name: 'CONDITIONAL_IF', pattern: /#\bif\b/, line_breaks: false })
+export const CONDITIONAL_ELSE = createToken({ name: 'CONDITIONAL_ELSE', pattern: /#\else\b/, line_breaks: false })
 export const CONDITIONAL_ELSE_IF = createToken({ name: 'CONDITIONAL_ELSE_IF', pattern: /#\belse[ ]*if\b/ })
 export const CONDITIONAL_END_IF = createToken({ name: 'CONDITIONAL_END_IF', pattern: /#\bend[ ]*if\b/ })
 
 export const CONDITIONAL_ERROR = createToken({ name: 'CONDITIONAL_ERROR', pattern: /#\berror\b[^\n\r]+/ })
 export const CONDITIONAL_CONST = createToken({ name: 'CONDITIONAL_CONST', pattern: /#\bconst\b/ })
 
-export const ELSE_IF = keyword([ 'Else', 'If' ])
+export const ELSE_IF = keyword(['Else', 'If'])
 
-export const END_FOR = keyword([ 'End', 'For' ])
-export const END_FUNCTION = keyword([ 'End', 'Function' ])
-export const END_IF = keyword([ 'End', 'If' ])
-export const END_SUB = keyword([ 'End', 'Sub' ])
-export const END_WHILE = keyword([ 'End', 'While' ])
+export const END_FOR = keyword(['End', 'For'])
+export const END_FUNCTION = keyword(['End', 'Function'])
+export const END_IF = keyword(['End', 'If'])
+export const END_SUB = keyword(['End', 'Sub'])
+export const END_WHILE = keyword(['End', 'While'])
 
 export const AS = keyword('As')
 export const EVAL = keyword('Eval')
@@ -90,26 +89,26 @@ export const IF = keyword('If')
 export const IN = keyword('In')
 export const NEXT = keyword('Next')
 
-export const EXIT_FOR = keyword([ 'Exit', 'For' ])
-export const EXIT_WHILE = keyword([ 'Exit', 'While' ])
+export const EXIT_FOR = keyword(['Exit', 'For'])
+export const EXIT_WHILE = keyword(['Exit', 'While'])
 
 export const TYPE_DECLARATION = createToken({
   name: 'TYPE_DECLARATION',
   pattern: /[\$%!#&]/
 })
 
-export const OPEN_BRACKET = createToken({ name: 'OPEN_BRACKET', pattern: '[' })
-export const OPEN_CURLY_BRACE = createToken({ name: 'OPEN_CURLY_BRACE', pattern: '{' })
-export const OPEN_PAREN = createToken({ name: 'OPEN_PAREN', pattern: '(' })
+export const OPEN_BRACKET = createToken({ name: 'OPEN_BRACKET', pattern: '[', line_breaks: false })
+export const OPEN_CURLY_BRACE = createToken({ name: 'OPEN_CURLY_BRACE', pattern: '{', line_breaks: false })
+export const OPEN_PAREN = createToken({ name: 'OPEN_PAREN', pattern: '(', line_breaks: false })
 
-export const CLOSE_BRACKET = createToken({ name: 'CLOSE_BRACKET', pattern: ']' })
-export const CLOSE_CURLY_BRACE = createToken({ name: 'CLOSE_CURLY_BRACE', pattern: '}' })
-export const CLOSE_PAREN = createToken({ name: 'CLOSE_PAREN', pattern: ')' })
+export const CLOSE_BRACKET = createToken({ name: 'CLOSE_BRACKET', pattern: ']', line_breaks: false })
+export const CLOSE_CURLY_BRACE = createToken({ name: 'CLOSE_CURLY_BRACE', pattern: '}', line_breaks: false })
+export const CLOSE_PAREN = createToken({ name: 'CLOSE_PAREN', pattern: ')', line_breaks: false })
 
 export const PERIOD = createToken({ name: 'PERIOD', pattern: '.' })
 
-export const FULL_PRINT = keyword('Print', { name: 'FULL_PRINT', categories: PRINT })
-export const SHORT_PRINT = createToken({ pattern: '?', name: 'SHORT_PRINT', categories: PRINT })
+export const FULL_PRINT = keyword('Print', { name: 'FULL_PRINT', categories: PRINT, line_breaks: false })
+export const SHORT_PRINT = createToken({ pattern: '?', name: 'SHORT_PRINT', categories: PRINT, line_breaks: false })
 
 export const RETURN = keyword('return')
 export const STEP = keyword('step')
@@ -124,7 +123,7 @@ export const STRING = keyword('String', { categories: BASE_TYPE })
 export const OBJECT = keyword('Object', { categories: BASE_TYPE })
 export const FUNCTION = keyword('Function', { categories: BASE_TYPE })
 export const INTERFACE = keyword('Interface', { categories: BASE_TYPE })
-export const INVALID = keyword('Invalid', { categories: [ BASE_TYPE, LITERAL ] })
+export const INVALID = keyword('Invalid', { categories: [BASE_TYPE, LITERAL] })
 export const DYNAMIC = keyword('Dynamic', { categories: BASE_TYPE })
 export const VOID = keyword('Void', { categories: BASE_TYPE })
 
@@ -215,19 +214,19 @@ export const NEWLINE = createToken({
 
 export const MOD = keyword('Mod', { categories: LOGIC_OPERATOR })
 export const OR = keyword('Or', { categories: LOGIC_OPERATOR })
-export const NOT = keyword('Not', { categories: [ LOGIC_OPERATOR, UNARY ] })
+export const NOT = keyword('Not', { categories: [LOGIC_OPERATOR, UNARY] })
 export const AND = keyword('And', { categories: LOGIC_OPERATOR })
 
 export const SEMICOLON = createToken({ name: 'SEMICOLON', pattern: ';', categories: TERMINATOR })
 
-export const DECREMENT = createToken({ name: 'DECREMENT', pattern: '--', categories: [ UNARY, POSTFIX ] })
-export const INCREMENT = createToken({ name: 'INCREMENT', pattern: '++', categories: [ UNARY, POSTFIX ] })
+export const DECREMENT = createToken({ name: 'DECREMENT', pattern: '--', categories: [UNARY, POSTFIX] })
+export const INCREMENT = createToken({ name: 'INCREMENT', pattern: '++', categories: [UNARY, POSTFIX] })
 export const BITSHIFT_LEFT = createToken({ name: 'BITSHIFT_LEFT', pattern: '<<', categories: SHIFT_OPERATOR })
 export const BITSHIFT_RIGHT = createToken({ name: 'BITSHIFT_RIGHT', pattern: '>>', categories: SHIFT_OPERATOR })
 export const OP_DIVIDE = createToken({ name: 'OP_DIVIDE', pattern: '/', categories: MULTI_OPERATOR })
 export const OP_MULTIPLE = createToken({ name: 'OP_MULTIPLE', pattern: '*', categories: MULTI_OPERATOR })
-export const OP_PLUS = createToken({ name: 'OP_PLUS', pattern: '+', categories: [ ADDICTIVE_OPERATOR, UNARY ] })
-export const OP_MINUS = createToken({ name: 'OP_MINUS', pattern: '-', categories: [ ADDICTIVE_OPERATOR, UNARY ] })
+export const OP_PLUS = createToken({ name: 'OP_PLUS', pattern: '+', categories: [ADDICTIVE_OPERATOR, UNARY] })
+export const OP_MINUS = createToken({ name: 'OP_MINUS', pattern: '-', categories: [ADDICTIVE_OPERATOR, UNARY] })
 export const OP_EXPONENT = createToken({ name: 'OP_EXPONENT', pattern: '^', categories: MULTI_OPERATOR })
 
 export const ALL_TOKENS = [

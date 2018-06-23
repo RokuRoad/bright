@@ -23,12 +23,15 @@
   {
     "type": "Rule",
     "name": "Program",
+    "orgText": "() => {\n            this.MANY(() => {\n                this.OR([\n                    { ALT: () => this.SUBRULE(this.FunctionDeclaration, Declaration) },\n                    { ALT: () => this.SUBRULE(this.LibraryStatement, Declaration) },\n                    { ALT: () => this.SUBRULE(this.SubDeclaration, Declaration) },\n                    { ALT: () => this.SUBRULE(this.ConditionalCompilationStatement, Declaration) },\n                    { ALT: () => this.SUBRULE(this.EmptyStatement, Declaration) },\n                    { ALT: () => this.SUBRULE(this.Comment, Declaration) }\n                ]);\n            });\n            this.OPTION(() => {\n                this.CONSUME(chevrotain_1.EOF);\n            });\n        }",
     "definition": [
       {
         "type": "Repetition",
+        "idx": 0,
         "definition": [
           {
             "type": "Alternation",
+            "idx": 0,
             "definition": [
               {
                 "type": "Flat",
@@ -96,6 +99,7 @@
       },
       {
         "type": "Option",
+        "idx": 0,
         "definition": [
           {
             "type": "Terminal",
@@ -111,12 +115,15 @@
   {
     "type": "Rule",
     "name": "BlockStatement",
+    "orgText": "() => {\n            this.MANY(() => {\n                this.OR([{ ALT: () => this.SUBRULE(this.Statement, body) }, { ALT: () => this.CONSUME(Tokens_1.TERMINATOR) }]);\n            });\n        }",
     "definition": [
       {
         "type": "Repetition",
+        "idx": 0,
         "definition": [
           {
             "type": "Alternation",
+            "idx": 0,
             "definition": [
               {
                 "type": "Flat",
@@ -149,9 +156,11 @@
   {
     "type": "Rule",
     "name": "Statement",
+    "orgText": "() => {\n            this.OR2(this.cacheStatement ||\n                (this.cacheStatement = [\n                    { ALT: () => this.SUBRULE(this.EmptyStatement, Empty) },\n                    { ALT: () => this.SUBRULE(this.ForStatement, Statement) },\n                    { ALT: () => this.SUBRULE(this.IfStatement, Statement) },\n                    { ALT: () => this.SUBRULE(this.ForEachStatement, Statement) },\n                    { ALT: () => this.SUBRULE(this.WhileStatement, Statement) },\n                    { ALT: () => this.SUBRULE(this.PrintStatement, Statement) },\n                    { ALT: () => this.SUBRULE(this.ReturnStatement, Statement) },\n                    { ALT: () => this.SUBRULE(this.StopStatement, Statement) },\n                    { ALT: () => this.SUBRULE(this.GoToStatement, Statement) },\n                    { ALT: () => this.SUBRULE(this.LabeledStatement, Statement) },\n                    { ALT: () => this.SUBRULE(this.ConditionalCompilationStatement, Statement) },\n                    { ALT: () => this.SUBRULE(this.DimStatement, Statement) },\n                    { ALT: () => this.SUBRULE(this.NextStatement, Statement) },\n                    { ALT: () => this.SUBRULE(this.ExitStatement, Statement) },\n                    { ALT: () => this.SUBRULE(this.ExpressionStatement, Statement) }\n                ]));\n            this.OPTION(() => {\n                this.SUBRULE2(this.Comment, { LABEL: 'trailingComments' });\n            });\n        }",
     "definition": [
       {
         "type": "Alternation",
+        "idx": 2,
         "definition": [
           {
             "type": "Flat",
@@ -307,6 +316,7 @@
       },
       {
         "type": "Option",
+        "idx": 0,
         "definition": [
           {
             "type": "NonTerminal",
@@ -320,6 +330,7 @@
   {
     "type": "Rule",
     "name": "ArrayExpression",
+    "orgText": "() => {\n            this.CONSUME(Tokens_1.OPEN_BRACKET);\n            this.MANY(() => {\n                this.OR([\n                    { ALT: () => this.SUBRULE(this.ArrayElement, { LABEL: 'elements' }) },\n                    { ALT: () => this.CONSUME(Tokens_1.COMMA) },\n                    { ALT: () => this.SUBRULE(this.EndOfStatement, { LABEL: 'trailingComments' }) }\n                ]);\n            });\n            this.CONSUME(Tokens_1.CLOSE_BRACKET);\n        }",
     "definition": [
       {
         "type": "Terminal",
@@ -330,9 +341,11 @@
       },
       {
         "type": "Repetition",
+        "idx": 0,
         "definition": [
           {
             "type": "Alternation",
+            "idx": 0,
             "definition": [
               {
                 "type": "Flat",
@@ -382,6 +395,7 @@
   {
     "type": "Rule",
     "name": "ObjectExpression",
+    "orgText": "() => {\n            this.CONSUME(Tokens_1.OPEN_CURLY_BRACE);\n            this.MANY(() => {\n                this.OR([\n                    { ALT: () => this.SUBRULE(this.Property, { LABEL: 'properties' }) },\n                    { ALT: () => this.CONSUME(Tokens_1.COMMA) },\n                    { ALT: () => this.SUBRULE(this.EndOfStatement, { LABEL: 'trailingComments' }) }\n                ]);\n            });\n            this.CONSUME(Tokens_1.CLOSE_CURLY_BRACE);\n        }",
     "definition": [
       {
         "type": "Terminal",
@@ -392,9 +406,11 @@
       },
       {
         "type": "Repetition",
+        "idx": 0,
         "definition": [
           {
             "type": "Alternation",
+            "idx": 0,
             "definition": [
               {
                 "type": "Flat",
@@ -444,6 +460,7 @@
   {
     "type": "Rule",
     "name": "Property",
+    "orgText": "() => {\n            this.SUBRULE(this.PropertyName, { LABEL: 'key' });\n            this.CONSUME(Tokens_1.COLON);\n            this.SUBRULE(this.AssignmentExpression, { LABEL: 'value' });\n        }",
     "definition": [
       {
         "type": "NonTerminal",
@@ -467,6 +484,7 @@
   {
     "type": "Rule",
     "name": "ArrayElement",
+    "orgText": "() => {\n            this.SUBRULE(this.AssignmentExpression, { LABEL: 'value' });\n            this.OPTION(() => {\n                this.CONSUME(Tokens_1.COMMA);\n            });\n        }",
     "definition": [
       {
         "type": "NonTerminal",
@@ -475,6 +493,7 @@
       },
       {
         "type": "Option",
+        "idx": 0,
         "definition": [
           {
             "type": "Terminal",
@@ -490,9 +509,11 @@
   {
     "type": "Rule",
     "name": "PropertyName",
+    "orgText": "() => {\n            this.OR([\n                { ALT: () => this.SUBRULE(this.Identifier) },\n                { ALT: () => this.SUBRULE(this.ReservedWord) },\n                { ALT: () => this.CONSUME(Tokens_1.STRING_LITERAL) },\n                { ALT: () => this.CONSUME(Tokens_1.NUMBER_LITERAL) }\n            ]);\n        }",
     "definition": [
       {
         "type": "Alternation",
+        "idx": 0,
         "definition": [
           {
             "type": "Flat",
@@ -545,6 +566,7 @@
   {
     "type": "Rule",
     "name": "DimStatement",
+    "orgText": "() => {\n            this.CONSUME(Tokens_1.DIM);\n            this.SUBRULE(this.Identifier);\n            this.SUBRULE(this.ArrayExpression);\n        }",
     "definition": [
       {
         "type": "Terminal",
@@ -567,9 +589,11 @@
   {
     "type": "Rule",
     "name": "EmptyStatement",
+    "orgText": "() => {\n            this.OPTION(() => {\n                this.SUBRULE2(this.Comment, { LABEL: 'trailingComments' });\n            });\n            this.CONSUME(Tokens_1.NEWLINE);\n        }",
     "definition": [
       {
         "type": "Option",
+        "idx": 0,
         "definition": [
           {
             "type": "NonTerminal",
@@ -590,9 +614,11 @@
   {
     "type": "Rule",
     "name": "ExitStatement",
+    "orgText": "() => {\n            this.OR([\n                { ALT: () => this.CONSUME(Tokens_1.EXIT_WHILE) },\n                { ALT: () => this.CONSUME(Tokens_1.EXIT_FOR) }\n            ]);\n        }",
     "definition": [
       {
         "type": "Alternation",
+        "idx": 0,
         "definition": [
           {
             "type": "Flat",
@@ -623,6 +649,7 @@
   {
     "type": "Rule",
     "name": "IfStatement",
+    "orgText": "() => {\n            let isBlock = false;\n            this.CONSUME(Tokens_1.IF);\n            this.SUBRULE1(this.ExpressionStatement, { LABEL: 'test' });\n            this.OPTION1(() => {\n                this.CONSUME(Tokens_1.THEN);\n            });\n            this.OPTION2(() => {\n                this.SUBRULE(this.EndOfStatement, { LABEL: 'trailingComments' });\n                isBlock = true;\n            });\n            this.OPTION4(() => {\n                if (isBlock) {\n                    this.SUBRULE2(this.BlockStatement, { LABEL: 'consequent' });\n                }\n                else {\n                    this.SUBRULE2(this.Statement, { LABEL: 'consequent' });\n                }\n            });\n            this.MANY(() => {\n                this.SUBRULE(this.ElseIfStatement, { LABEL: 'alternate' });\n            });\n            this.OPTION5(() => {\n                this.SUBRULE(this.ElseStatement, { LABEL: 'alternate' });\n            });\n            this.OPTION6(() => {\n                this.CONSUME(Tokens_1.END_IF);\n            });\n        }",
     "definition": [
       {
         "type": "Terminal",
@@ -637,6 +664,7 @@
       },
       {
         "type": "Option",
+        "idx": 1,
         "definition": [
           {
             "type": "Terminal",
@@ -648,6 +676,7 @@
       },
       {
         "type": "Option",
+        "idx": 2,
         "definition": [
           {
             "type": "NonTerminal",
@@ -658,6 +687,7 @@
       },
       {
         "type": "Option",
+        "idx": 4,
         "definition": [
           {
             "type": "NonTerminal",
@@ -673,6 +703,7 @@
       },
       {
         "type": "Repetition",
+        "idx": 0,
         "definition": [
           {
             "type": "NonTerminal",
@@ -683,6 +714,7 @@
       },
       {
         "type": "Option",
+        "idx": 5,
         "definition": [
           {
             "type": "NonTerminal",
@@ -693,6 +725,7 @@
       },
       {
         "type": "Option",
+        "idx": 6,
         "definition": [
           {
             "type": "Terminal",
@@ -707,6 +740,7 @@
   {
     "type": "Rule",
     "name": "ElseIfStatement",
+    "orgText": "() => {\n            this.CONSUME(Tokens_1.ELSE_IF);\n            this.SUBRULE(this.ExpressionStatement, { LABEL: 'test' });\n            this.OPTION1(() => {\n                this.CONSUME(Tokens_1.THEN);\n            });\n            this.SUBRULE(this.EndOfStatement, { LABEL: 'trailingComments' });\n            this.OPTION5(() => {\n                this.SUBRULE2(this.BlockStatement, body);\n            });\n        }",
     "definition": [
       {
         "type": "Terminal",
@@ -721,6 +755,7 @@
       },
       {
         "type": "Option",
+        "idx": 1,
         "definition": [
           {
             "type": "Terminal",
@@ -737,6 +772,7 @@
       },
       {
         "type": "Option",
+        "idx": 5,
         "definition": [
           {
             "type": "NonTerminal",
@@ -750,6 +786,7 @@
   {
     "type": "Rule",
     "name": "ElseStatement",
+    "orgText": "() => {\n            let isBlock = false;\n            this.CONSUME(Tokens_1.ELSE);\n            this.OPTION1(() => {\n                this.SUBRULE(this.EndOfStatement, { LABEL: 'trailingComments' });\n                isBlock = true;\n            });\n            this.OPTION2(() => {\n                if (isBlock) {\n                    this.SUBRULE2(this.BlockStatement, body);\n                }\n                else {\n                    this.SUBRULE2(this.Statement, body);\n                }\n            });\n        }",
     "definition": [
       {
         "type": "Terminal",
@@ -759,6 +796,7 @@
       },
       {
         "type": "Option",
+        "idx": 1,
         "definition": [
           {
             "type": "NonTerminal",
@@ -769,6 +807,7 @@
       },
       {
         "type": "Option",
+        "idx": 2,
         "definition": [
           {
             "type": "NonTerminal",
@@ -787,6 +826,7 @@
   {
     "type": "Rule",
     "name": "ForStatement",
+    "orgText": "() => {\n            this.CONSUME(Tokens_1.FOR);\n            this.SUBRULE1(this.Identifier, { LABEL: 'counter' });\n            this.CONSUME(Tokens_1.EQUAL);\n            this.SUBRULE(this.AssignmentExpression, { LABEL: 'init' });\n            this.CONSUME(Tokens_1.TO);\n            this.SUBRULE2(this.ExpressionStatement, { LABEL: 'test' });\n            this.OPTION(() => {\n                this.CONSUME(Tokens_1.STEP);\n                this.SUBRULE3(this.ExpressionStatement, { LABEL: 'update' });\n            });\n            this.SUBRULE4(this.EndOfStatement, { LABEL: 'trailingComments' });\n            this.OPTION5(() => {\n                this.SUBRULE5(this.BlockStatement, body);\n            });\n            this.OPTION1(() => {\n                this.SUBRULE(this.NextStatement);\n            });\n            this.OPTION2(() => {\n                this.CONSUME(Tokens_1.END_FOR);\n            });\n        }",
     "definition": [
       {
         "type": "Terminal",
@@ -824,6 +864,7 @@
       },
       {
         "type": "Option",
+        "idx": 0,
         "definition": [
           {
             "type": "Terminal",
@@ -845,6 +886,7 @@
       },
       {
         "type": "Option",
+        "idx": 5,
         "definition": [
           {
             "type": "NonTerminal",
@@ -855,6 +897,7 @@
       },
       {
         "type": "Option",
+        "idx": 1,
         "definition": [
           {
             "type": "NonTerminal",
@@ -865,6 +908,7 @@
       },
       {
         "type": "Option",
+        "idx": 2,
         "definition": [
           {
             "type": "Terminal",
@@ -879,6 +923,7 @@
   {
     "type": "Rule",
     "name": "ForEachStatement",
+    "orgText": "() => {\n            this.CONSUME(Tokens_1.FOR);\n            this.CONSUME(Tokens_1.EACH);\n            this.SUBRULE1(this.Identifier, { LABEL: 'counter' });\n            this.CONSUME(Tokens_1.IN);\n            this.SUBRULE2(this.ExpressionStatement, { LABEL: 'countExpression' });\n            this.SUBRULE3(this.EndOfStatement, { LABEL: 'trailingComments' });\n            this.SUBRULE(this.BlockStatement, body);\n            this.OPTION1(() => {\n                this.SUBRULE(this.NextStatement);\n            });\n            this.OPTION2(() => {\n                this.CONSUME(Tokens_1.END_FOR);\n            });\n        }",
     "definition": [
       {
         "type": "Terminal",
@@ -920,6 +965,7 @@
       },
       {
         "type": "Option",
+        "idx": 1,
         "definition": [
           {
             "type": "NonTerminal",
@@ -930,6 +976,7 @@
       },
       {
         "type": "Option",
+        "idx": 2,
         "definition": [
           {
             "type": "Terminal",
@@ -944,6 +991,7 @@
   {
     "type": "Rule",
     "name": "GoToStatement",
+    "orgText": "() => {\n            this.CONSUME(Tokens_1.GOTO);\n            this.SUBRULE1(this.Identifier);\n        }",
     "definition": [
       {
         "type": "Terminal",
@@ -961,6 +1009,7 @@
   {
     "type": "Rule",
     "name": "LabeledStatement",
+    "orgText": "() => {\n            this.SUBRULE(this.Identifier, { LABEL: 'label' });\n            this.CONSUME(Tokens_1.COLON);\n            this.CONSUME(Tokens_1.NEWLINE);\n            this.SUBRULE(this.Statement, { LABEL: 'body' });\n        }",
     "definition": [
       {
         "type": "NonTerminal",
@@ -991,6 +1040,7 @@
   {
     "type": "Rule",
     "name": "LibraryStatement",
+    "orgText": "() => {\n            this.CONSUME(Tokens_1.LIBRARY);\n            this.CONSUME(Tokens_1.STRING_LITERAL, { LABEL: 'path' });\n        }",
     "definition": [
       {
         "type": "Terminal",
@@ -1010,6 +1060,7 @@
   {
     "type": "Rule",
     "name": "NextStatement",
+    "orgText": "() => {\n            this.CONSUME(Tokens_1.NEXT);\n            this.SUBRULE(this.EndOfStatement, { LABEL: 'trailingComments' });\n        }",
     "definition": [
       {
         "type": "Terminal",
@@ -1027,6 +1078,7 @@
   {
     "type": "Rule",
     "name": "PrintStatement",
+    "orgText": "() => {\n            this.CONSUME(Tokens_1.PRINT);\n            this.MANY(() => {\n                this.OR([\n                    { ALT: () => this.SUBRULE(this.ExpressionStatement, { LABEL: 'value' }) },\n                    { ALT: () => this.CONSUME(Tokens_1.COMMA) },\n                    { ALT: () => this.CONSUME(Tokens_1.SEMICOLON) }\n                ]);\n            });\n        }",
     "definition": [
       {
         "type": "Terminal",
@@ -1037,9 +1089,11 @@
       },
       {
         "type": "Repetition",
+        "idx": 0,
         "definition": [
           {
             "type": "Alternation",
+            "idx": 0,
             "definition": [
               {
                 "type": "Flat",
@@ -1084,6 +1138,7 @@
   {
     "type": "Rule",
     "name": "ReturnStatement",
+    "orgText": "() => {\n            this.CONSUME(Tokens_1.RETURN);\n            this.OPTION1(() => {\n                this.SUBRULE(this.ExpressionStatement, { LABEL: 'argument' });\n            });\n        }",
     "definition": [
       {
         "type": "Terminal",
@@ -1093,6 +1148,7 @@
       },
       {
         "type": "Option",
+        "idx": 1,
         "definition": [
           {
             "type": "NonTerminal",
@@ -1106,6 +1162,7 @@
   {
     "type": "Rule",
     "name": "StopStatement",
+    "orgText": "() => {\n            this.CONSUME(Tokens_1.STOP);\n            this.SUBRULE(this.EndOfStatement, { LABEL: 'trailingComments' });\n        }",
     "definition": [
       {
         "type": "Terminal",
@@ -1123,6 +1180,7 @@
   {
     "type": "Rule",
     "name": "WhileStatement",
+    "orgText": "() => {\n            this.CONSUME(Tokens_1.WHILE);\n            this.SUBRULE(this.ExpressionStatement, { LABEL: 'test' });\n            this.SUBRULE(this.EndOfStatement, { LABEL: 'trailingComments' });\n            this.SUBRULE(this.BlockStatement, body);\n            this.CONSUME(Tokens_1.END_WHILE);\n        }",
     "definition": [
       {
         "type": "Terminal",
@@ -1156,6 +1214,7 @@
   {
     "type": "Rule",
     "name": "FunctionExpression",
+    "orgText": "() => {\n            this.CONSUME(Tokens_1.FUNCTION);\n            this.OPTION(() => {\n                this.SUBRULE(this.ParameterList, { LABEL: 'params' });\n            });\n            this.OPTION1(() => {\n                this.CONSUME(Tokens_1.AS);\n                this.SUBRULE(this.TypeAnnotation, { LABEL: 'ReturnType' });\n            });\n            this.OPTION2(() => {\n                this.SUBRULE(this.EndOfStatement, { LABEL: 'trailingComments' });\n            });\n            this.OPTION3(() => {\n                this.SUBRULE(this.BlockStatement, body);\n            });\n            this.CONSUME(Tokens_1.END_FUNCTION);\n        }",
     "definition": [
       {
         "type": "Terminal",
@@ -1165,6 +1224,7 @@
       },
       {
         "type": "Option",
+        "idx": 0,
         "definition": [
           {
             "type": "NonTerminal",
@@ -1175,6 +1235,7 @@
       },
       {
         "type": "Option",
+        "idx": 1,
         "definition": [
           {
             "type": "Terminal",
@@ -1191,6 +1252,7 @@
       },
       {
         "type": "Option",
+        "idx": 2,
         "definition": [
           {
             "type": "NonTerminal",
@@ -1201,6 +1263,7 @@
       },
       {
         "type": "Option",
+        "idx": 3,
         "definition": [
           {
             "type": "NonTerminal",
@@ -1220,6 +1283,7 @@
   {
     "type": "Rule",
     "name": "FunctionDeclaration",
+    "orgText": "() => {\n            this.CONSUME(Tokens_1.FUNCTION);\n            this.SUBRULE(this.UnTypedIdentifier, { LABEL: 'id' });\n            this.OPTION(() => {\n                this.SUBRULE(this.ParameterList, { LABEL: 'params' });\n            });\n            this.OPTION1(() => {\n                this.CONSUME(Tokens_1.AS);\n                this.SUBRULE(this.TypeAnnotation, { LABEL: 'ReturnType' });\n            });\n            this.SUBRULE(this.EndOfStatement, { LABEL: 'trailingComments' });\n            this.OPTION3(() => {\n                this.SUBRULE(this.BlockStatement, body);\n            });\n            this.CONSUME(Tokens_1.END_FUNCTION);\n        }",
     "definition": [
       {
         "type": "Terminal",
@@ -1234,6 +1298,7 @@
       },
       {
         "type": "Option",
+        "idx": 0,
         "definition": [
           {
             "type": "NonTerminal",
@@ -1244,6 +1309,7 @@
       },
       {
         "type": "Option",
+        "idx": 1,
         "definition": [
           {
             "type": "Terminal",
@@ -1265,6 +1331,7 @@
       },
       {
         "type": "Option",
+        "idx": 3,
         "definition": [
           {
             "type": "NonTerminal",
@@ -1284,6 +1351,7 @@
   {
     "type": "Rule",
     "name": "SubExpression",
+    "orgText": "() => {\n            this.CONSUME(Tokens_1.SUB);\n            this.OPTION(() => {\n                this.SUBRULE(this.ParameterList, { LABEL: 'params' });\n            });\n            this.OPTION1(() => {\n                this.SUBRULE(this.EndOfStatement, { LABEL: 'trailingComments' });\n            });\n            this.OPTION2(() => {\n                this.SUBRULE(this.BlockStatement, body);\n            });\n            this.CONSUME(Tokens_1.END_SUB);\n        }",
     "definition": [
       {
         "type": "Terminal",
@@ -1293,6 +1361,7 @@
       },
       {
         "type": "Option",
+        "idx": 0,
         "definition": [
           {
             "type": "NonTerminal",
@@ -1303,6 +1372,7 @@
       },
       {
         "type": "Option",
+        "idx": 1,
         "definition": [
           {
             "type": "NonTerminal",
@@ -1313,6 +1383,7 @@
       },
       {
         "type": "Option",
+        "idx": 2,
         "definition": [
           {
             "type": "NonTerminal",
@@ -1332,6 +1403,7 @@
   {
     "type": "Rule",
     "name": "SubDeclaration",
+    "orgText": "() => {\n            this.CONSUME(Tokens_1.SUB);\n            this.SUBRULE(this.UnTypedIdentifier, { LABEL: 'id' });\n            this.OPTION1(() => {\n                this.SUBRULE(this.ParameterList, { LABEL: 'params' });\n            });\n            this.OPTION2(() => {\n                this.CONSUME(Tokens_1.AS);\n                this.SUBRULE(this.TypeAnnotation, { LABEL: 'ReturnType' });\n            });\n            this.SUBRULE(this.EndOfStatement, { LABEL: 'trailingComments' });\n            this.OPTION3(() => {\n                this.SUBRULE(this.BlockStatement, body);\n            });\n            this.CONSUME(Tokens_1.END_SUB);\n        }",
     "definition": [
       {
         "type": "Terminal",
@@ -1346,6 +1418,7 @@
       },
       {
         "type": "Option",
+        "idx": 1,
         "definition": [
           {
             "type": "NonTerminal",
@@ -1356,6 +1429,7 @@
       },
       {
         "type": "Option",
+        "idx": 2,
         "definition": [
           {
             "type": "Terminal",
@@ -1377,6 +1451,7 @@
       },
       {
         "type": "Option",
+        "idx": 3,
         "definition": [
           {
             "type": "NonTerminal",
@@ -1396,6 +1471,7 @@
   {
     "type": "Rule",
     "name": "ParameterList",
+    "orgText": "() => {\n            this.CONSUME(Tokens_1.OPEN_PAREN);\n            this.MANY_SEP({\n                SEP: Tokens_1.COMMA,\n                DEF() {\n                    this.SUBRULE2(this.Parameter);\n                }\n            });\n            this.CONSUME(Tokens_1.CLOSE_PAREN);\n        }",
     "definition": [
       {
         "type": "Terminal",
@@ -1406,6 +1482,7 @@
       },
       {
         "type": "RepetitionWithSeparator",
+        "idx": 0,
         "separator": {
           "type": "Terminal",
           "name": "COMMA",
@@ -1433,9 +1510,11 @@
   {
     "type": "Rule",
     "name": "Parameter",
+    "orgText": "() => {\n            this.OR([\n                { ALT: () => this.SUBRULE(this.Literal) },\n                { ALT: () => this.SUBRULE(this.Identifier) },\n                { ALT: () => this.SUBRULE(this.ReservedWord) }\n            ]);\n            this.OPTION(() => {\n                this.OPTION1(() => {\n                    this.CONSUME(Tokens_1.EQUAL);\n                    this.SUBRULE(this.AssignmentExpression, { LABEL: 'value' });\n                });\n                this.OPTION2(() => {\n                    this.CONSUME(Tokens_1.AS);\n                    this.SUBRULE(this.TypeAnnotation);\n                });\n            });\n        }",
     "definition": [
       {
         "type": "Alternation",
+        "idx": 0,
         "definition": [
           {
             "type": "Flat",
@@ -1471,9 +1550,11 @@
       },
       {
         "type": "Option",
+        "idx": 0,
         "definition": [
           {
             "type": "Option",
+            "idx": 1,
             "definition": [
               {
                 "type": "Terminal",
@@ -1491,6 +1572,7 @@
           },
           {
             "type": "Option",
+            "idx": 2,
             "definition": [
               {
                 "type": "Terminal",
@@ -1512,6 +1594,7 @@
   {
     "type": "Rule",
     "name": "TypeAnnotation",
+    "orgText": "() => {\n            this.CONSUME(Tokens_1.BASE_TYPE);\n        }",
     "definition": [
       {
         "type": "Terminal",
@@ -1525,6 +1608,7 @@
   {
     "type": "Rule",
     "name": "ExpressionStatement",
+    "orgText": "() => {\n            this.SUBRULE(this.AssignmentExpression);\n        }",
     "definition": [
       {
         "type": "NonTerminal",
@@ -1536,6 +1620,7 @@
   {
     "type": "Rule",
     "name": "AssignmentExpression",
+    "orgText": "() => {\n            this.SUBRULE(this.AdditionExpression);\n        }",
     "definition": [
       {
         "type": "NonTerminal",
@@ -1547,6 +1632,7 @@
   {
     "type": "Rule",
     "name": "AdditionExpression",
+    "orgText": "() => {\n            this.SUBRULE1(this.MultiplicationExpression, { LABEL: 'left' });\n            this.MANY(() => {\n                this.CONSUME(Tokens_1.ADDICTIVE_OPERATOR);\n                this.SUBRULE2(this.MultiplicationExpression, right);\n            });\n        }",
     "definition": [
       {
         "type": "NonTerminal",
@@ -1555,6 +1641,7 @@
       },
       {
         "type": "Repetition",
+        "idx": 0,
         "definition": [
           {
             "type": "Terminal",
@@ -1575,6 +1662,7 @@
   {
     "type": "Rule",
     "name": "MultiplicationExpression",
+    "orgText": "() => {\n            this.SUBRULE1(this.ShiftExpression, left);\n            this.MANY(() => {\n                this.CONSUME(Tokens_1.MULTI_OPERATOR);\n                this.SUBRULE2(this.ShiftExpression, right);\n            });\n        }",
     "definition": [
       {
         "type": "NonTerminal",
@@ -1583,6 +1671,7 @@
       },
       {
         "type": "Repetition",
+        "idx": 0,
         "definition": [
           {
             "type": "Terminal",
@@ -1603,6 +1692,7 @@
   {
     "type": "Rule",
     "name": "ShiftExpression",
+    "orgText": "() => {\n            this.SUBRULE1(this.RelationExpression, left);\n            this.MANY(() => {\n                this.CONSUME(Tokens_1.SHIFT_OPERATOR);\n                this.SUBRULE2(this.RelationExpression, right);\n            });\n        }",
     "definition": [
       {
         "type": "NonTerminal",
@@ -1611,6 +1701,7 @@
       },
       {
         "type": "Repetition",
+        "idx": 0,
         "definition": [
           {
             "type": "Terminal",
@@ -1631,6 +1722,7 @@
   {
     "type": "Rule",
     "name": "RelationExpression",
+    "orgText": "() => {\n            this.SUBRULE1(this.EqualityExpression, left);\n            this.MANY(() => {\n                this.CONSUME(Tokens_1.RELATIONAL_OPERATOR);\n                this.SUBRULE2(this.EqualityExpression, right);\n            });\n        }",
     "definition": [
       {
         "type": "NonTerminal",
@@ -1639,6 +1731,7 @@
       },
       {
         "type": "Repetition",
+        "idx": 0,
         "definition": [
           {
             "type": "Terminal",
@@ -1659,6 +1752,7 @@
   {
     "type": "Rule",
     "name": "EqualityExpression",
+    "orgText": "() => {\n            this.SUBRULE1(this.LogicExpression, left);\n            this.MANY(() => {\n                this.CONSUME(Tokens_1.EQUALITY_OPERATOR);\n                this.SUBRULE2(this.LogicExpression, right);\n            });\n        }",
     "definition": [
       {
         "type": "NonTerminal",
@@ -1667,6 +1761,7 @@
       },
       {
         "type": "Repetition",
+        "idx": 0,
         "definition": [
           {
             "type": "Terminal",
@@ -1687,6 +1782,7 @@
   {
     "type": "Rule",
     "name": "LogicExpression",
+    "orgText": "() => {\n            this.SUBRULE1(this.UnaryExpression, left);\n            this.MANY(() => {\n                this.CONSUME(Tokens_1.LOGIC_OPERATOR);\n                this.SUBRULE2(this.UnaryExpression, right);\n            });\n        }",
     "definition": [
       {
         "type": "NonTerminal",
@@ -1695,6 +1791,7 @@
       },
       {
         "type": "Repetition",
+        "idx": 0,
         "definition": [
           {
             "type": "Terminal",
@@ -1715,9 +1812,11 @@
   {
     "type": "Rule",
     "name": "UnaryExpression",
+    "orgText": "() => {\n            this.OR([\n                { ALT: () => this.SUBRULE(this.PostfixExpression) },\n                {\n                    ALT: () => {\n                        this.CONSUME(Tokens_1.UNARY);\n                        this.SUBRULE(this.UnaryExpression, right);\n                    }\n                }\n            ]);\n        }",
     "definition": [
       {
         "type": "Alternation",
+        "idx": 0,
         "definition": [
           {
             "type": "Flat",
@@ -1753,6 +1852,7 @@
   {
     "type": "Rule",
     "name": "Arguments",
+    "orgText": "() => {\n            this.CONSUME(Tokens_1.OPEN_PAREN);\n            this.MANY_SEP({\n                SEP: Tokens_1.COMMA,\n                DEF() {\n                    this.SUBRULE(this.AssignmentExpression, { LABEL: 'param' });\n                }\n            });\n            this.CONSUME(Tokens_1.CLOSE_PAREN);\n        }",
     "definition": [
       {
         "type": "Terminal",
@@ -1763,6 +1863,7 @@
       },
       {
         "type": "RepetitionWithSeparator",
+        "idx": 0,
         "separator": {
           "type": "Terminal",
           "name": "COMMA",
@@ -1790,6 +1891,7 @@
   {
     "type": "Rule",
     "name": "PostfixExpression",
+    "orgText": "() => {\n            this.SUBRULE(this.MemberExpression, left);\n            this.OPTION(() => this.CONSUME(Tokens_1.POSTFIX));\n        }",
     "definition": [
       {
         "type": "NonTerminal",
@@ -1798,6 +1900,7 @@
       },
       {
         "type": "Option",
+        "idx": 0,
         "definition": [
           {
             "type": "Terminal",
@@ -1813,6 +1916,7 @@
   {
     "type": "Rule",
     "name": "MemberExpression",
+    "orgText": "() => {\n            this.SUBRULE(this.PrimaryExpression, { LABEL: 'id' });\n            this.OPTION1(() => this.SUBRULE1(this.Arguments, { LABEL: 'args' }));\n            this.MANY(() => {\n                this.SUBRULE(this.MemberChunkExpression, { LABEL: 'properties' });\n            });\n        }",
     "definition": [
       {
         "type": "NonTerminal",
@@ -1821,6 +1925,7 @@
       },
       {
         "type": "Option",
+        "idx": 1,
         "definition": [
           {
             "type": "NonTerminal",
@@ -1831,6 +1936,7 @@
       },
       {
         "type": "Repetition",
+        "idx": 0,
         "definition": [
           {
             "type": "NonTerminal",
@@ -1844,9 +1950,11 @@
   {
     "type": "Rule",
     "name": "MemberChunkExpression",
+    "orgText": "() => {\n            this.OR([\n                { ALT: () => this.SUBRULE(this.ArrayExpression, { LABEL: 'property' }) },\n                { ALT: () => this.SUBRULE(this.DotMemberExpression, { LABEL: 'property' }) }\n            ]);\n            this.OPTION2(() => this.SUBRULE2(this.Arguments, { LABEL: 'args' }));\n        }",
     "definition": [
       {
         "type": "Alternation",
+        "idx": 0,
         "definition": [
           {
             "type": "Flat",
@@ -1872,6 +1980,7 @@
       },
       {
         "type": "Option",
+        "idx": 2,
         "definition": [
           {
             "type": "NonTerminal",
@@ -1885,9 +1994,11 @@
   {
     "type": "Rule",
     "name": "DotMemberExpression",
+    "orgText": "() => {\n            this.OR1([{ ALT: () => this.CONSUME(Tokens_1.PERIOD, operator) }, { ALT: () => this.CONSUME(Tokens_1.ATTRIBUTE, operator) }]);\n            this.OR2([\n                { ALT: () => this.SUBRULE(this.Identifier, right) },\n                { ALT: () => this.SUBRULE(this.ArrayExpression, right) },\n                { ALT: () => this.SUBRULE(this.ReservedWord, right) }\n            ]);\n        }",
     "definition": [
       {
         "type": "Alternation",
+        "idx": 1,
         "definition": [
           {
             "type": "Flat",
@@ -1917,6 +2028,7 @@
       },
       {
         "type": "Alternation",
+        "idx": 2,
         "definition": [
           {
             "type": "Flat",
@@ -1955,9 +2067,11 @@
   {
     "type": "Rule",
     "name": "PrimaryExpression",
+    "orgText": "() => {\n            this.OR(this.cachePrimaryExpression ||\n                (this.cachePrimaryExpression = [\n                    { ALT: () => this.SUBRULE(this.ArrayExpression) },\n                    { ALT: () => this.SUBRULE(this.ObjectExpression) },\n                    { ALT: () => this.SUBRULE(this.FunctionExpression) },\n                    { ALT: () => this.SUBRULE(this.SubExpression) },\n                    { ALT: () => this.SUBRULE(this.ParenthesisExpression) },\n                    { ALT: () => this.SUBRULE(this.Identifier) },\n                    { ALT: () => this.SUBRULE(this.ReservedWord) },\n                    { ALT: () => this.SUBRULE(this.Literal) }\n                ]));\n        }",
     "definition": [
       {
         "type": "Alternation",
+        "idx": 0,
         "definition": [
           {
             "type": "Flat",
@@ -2046,6 +2160,7 @@
   {
     "type": "Rule",
     "name": "ParenthesisExpression",
+    "orgText": "() => {\n            this.CONSUME(Tokens_1.OPEN_PAREN);\n            this.SUBRULE(this.ExpressionStatement, { LABEL: 'innerExpression' });\n            this.CONSUME(Tokens_1.CLOSE_PAREN);\n        }",
     "definition": [
       {
         "type": "Terminal",
@@ -2071,6 +2186,7 @@
   {
     "type": "Rule",
     "name": "Literal",
+    "orgText": "() => {\n            this.CONSUME(Tokens_1.LITERAL);\n            this.OPTION(() => {\n                this.CONSUME(Tokens_1.TYPE_DECLARATION);\n            });\n        }",
     "definition": [
       {
         "type": "Terminal",
@@ -2081,6 +2197,7 @@
       },
       {
         "type": "Option",
+        "idx": 0,
         "definition": [
           {
             "type": "Terminal",
@@ -2096,6 +2213,7 @@
   {
     "type": "Rule",
     "name": "UnTypedIdentifier",
+    "orgText": "() => {\n            this.CONSUME(Tokens_1.IDENTIFIER);\n        }",
     "definition": [
       {
         "type": "Terminal",
@@ -2109,6 +2227,7 @@
   {
     "type": "Rule",
     "name": "Identifier",
+    "orgText": "() => {\n            this.SUBRULE(this.UnTypedIdentifier, { LABEL: 'id' });\n            this.OPTION(() => {\n                this.CONSUME(Tokens_1.TYPE_DECLARATION, { LABEL: 'asType' });\n            });\n        }",
     "definition": [
       {
         "type": "NonTerminal",
@@ -2117,6 +2236,7 @@
       },
       {
         "type": "Option",
+        "idx": 0,
         "definition": [
           {
             "type": "Terminal",
@@ -2132,9 +2252,11 @@
   {
     "type": "Rule",
     "name": "ReservedWord",
+    "orgText": "() => {\n            this.OR(this.cacheReservedWord ||\n                (this.cacheReservedWord = [\n                    { ALT: () => this.CONSUME(Tokens_1.END) },\n                    { ALT: () => this.CONSUME(Tokens_1.IN) },\n                    { ALT: () => this.CONSUME(Tokens_1.MOD) },\n                    { ALT: () => this.CONSUME(Tokens_1.OBJECT) },\n                    { ALT: () => this.CONSUME(Tokens_1.STOP) },\n                    { ALT: () => this.CONSUME(Tokens_1.NEXT) },\n                    { ALT: () => this.CONSUME(Tokens_1.BOOLEAN) },\n                    { ALT: () => this.CONSUME(Tokens_1.INTEGER) },\n                    { ALT: () => this.CONSUME(Tokens_1.LONGINTEGER) },\n                    { ALT: () => this.CONSUME(Tokens_1.STRING) }\n                ]));\n        }",
     "definition": [
       {
         "type": "Alternation",
+        "idx": 0,
         "definition": [
           {
             "type": "Flat",
@@ -2253,9 +2375,11 @@
   {
     "type": "Rule",
     "name": "ConditionalCompilationStatement",
+    "orgText": "() => {\n            this.OR(this.cacheConditionalCompilationStatement ||\n                (this.cacheConditionalCompilationStatement = [\n                    { ALT: () => this.SUBRULE(this.ConditionalConst) },\n                    { ALT: () => this.SUBRULE(this.ConditionalError) },\n                    { ALT: () => this.SUBRULE(this.ConditionalIfStatement) }\n                ]));\n        }",
     "definition": [
       {
         "type": "Alternation",
+        "idx": 0,
         "definition": [
           {
             "type": "Flat",
@@ -2294,6 +2418,7 @@
   {
     "type": "Rule",
     "name": "ConditionalConst",
+    "orgText": "() => {\n            this.CONSUME(Tokens_1.CONDITIONAL_CONST);\n            this.SUBRULE(this.ExpressionStatement, { LABEL: 'assignment' });\n        }",
     "definition": [
       {
         "type": "Terminal",
@@ -2312,6 +2437,7 @@
   {
     "type": "Rule",
     "name": "ConditionalError",
+    "orgText": "() => {\n            this.CONSUME(Tokens_1.CONDITIONAL_ERROR);\n        }",
     "definition": [
       {
         "type": "Terminal",
@@ -2325,6 +2451,7 @@
   {
     "type": "Rule",
     "name": "ConditionalIfStatement",
+    "orgText": "() => {\n            this.CONSUME(Tokens_1.CONDITIONAL_IF);\n            this.SUBRULE1(this.ExpressionStatement, { LABEL: 'test' });\n            this.SUBRULE(this.EndOfStatement, { LABEL: 'trailingComments' });\n            this.SUBRULE2(this.BlockStatement, body);\n            this.MANY2(() => {\n                this.SUBRULE(this.ConditionalElseIfStatement, { LABEL: 'alternate' });\n            });\n            this.OPTION3(() => {\n                this.SUBRULE(this.ConditionalElseStatement, { LABEL: 'alternate' });\n            });\n            this.OPTION4(() => {\n                this.CONSUME(Tokens_1.CONDITIONAL_END_IF);\n            });\n        }",
     "definition": [
       {
         "type": "Terminal",
@@ -2350,6 +2477,7 @@
       },
       {
         "type": "Repetition",
+        "idx": 2,
         "definition": [
           {
             "type": "NonTerminal",
@@ -2360,6 +2488,7 @@
       },
       {
         "type": "Option",
+        "idx": 3,
         "definition": [
           {
             "type": "NonTerminal",
@@ -2370,6 +2499,7 @@
       },
       {
         "type": "Option",
+        "idx": 4,
         "definition": [
           {
             "type": "Terminal",
@@ -2385,6 +2515,7 @@
   {
     "type": "Rule",
     "name": "ConditionalElseIfStatement",
+    "orgText": "() => {\n            this.CONSUME(Tokens_1.CONDITIONAL_ELSE_IF);\n            this.SUBRULE(this.ExpressionStatement, { LABEL: 'test' });\n            this.SUBRULE(this.EndOfStatement, { LABEL: 'trailingComments' });\n            this.SUBRULE2(this.BlockStatement, body);\n        }",
     "definition": [
       {
         "type": "Terminal",
@@ -2413,6 +2544,7 @@
   {
     "type": "Rule",
     "name": "ConditionalElseStatement",
+    "orgText": "() => {\n            this.CONSUME(Tokens_1.CONDITIONAL_ELSE);\n            this.SUBRULE(this.EndOfStatement, { LABEL: 'trailingComments' });\n            this.SUBRULE2(this.BlockStatement, body);\n        }",
     "definition": [
       {
         "type": "Terminal",
@@ -2436,9 +2568,11 @@
   {
     "type": "Rule",
     "name": "Comment",
+    "orgText": "() => {\n            this.OR([\n                { ALT: () => this.CONSUME(Tokens_1.COMMENT_QUOTE) },\n                { ALT: () => this.CONSUME(Tokens_1.COMMENT_REM) }\n            ]);\n        }",
     "definition": [
       {
         "type": "Alternation",
+        "idx": 0,
         "definition": [
           {
             "type": "Flat",
@@ -2471,9 +2605,11 @@
   {
     "type": "Rule",
     "name": "EndOfStatement",
+    "orgText": "() => {\n            this.OPTION(() => {\n                this.SUBRULE(this.Comment);\n            });\n            this.CONSUME(Tokens_1.TERMINATOR);\n        }",
     "definition": [
       {
         "type": "Option",
+        "idx": 0,
         "definition": [
           {
             "type": "NonTerminal",
