@@ -145,13 +145,14 @@ export class BaseVisitor extends Visitor {
   }
 
   protected RenderToken(node): ASTNode | ASTNode[] {
-    const mapper = ({ startLine, startColumn, image, endLine, endColumn, startOffset, endOffset, tokenType }: TokenContext): ASTNode => {
+    const mapper = ({ startLine, startColumn, image, startOffset, tokenType }: TokenContext): ASTNode => {
+      const length = image.length
       const start = this.Position(startLine, startColumn)
-      const end = this.Position(endLine, endColumn)
+      const end = this.Position(startLine, startColumn + length)
 
       return {
         loc: { source: image, start, end },
-        range: [startOffset, endOffset + image.length],
+        range: [startOffset, startOffset + length],
         type: tokenType.tokenName
       }
     }

@@ -62,14 +62,9 @@ export const files = (path: string) => sync(path)
 /**
  * Renders code frame with error location
  * @param err Error object in form of Parser error
- * @param source Original source
+ * @param location
  */
-export const error = ({ message, token }, source: string): string => {
-  const location = {
-    end: { line: token.endLine, column: token.endColumn },
-    start: { line: token.startLine, column: token.startColumn }
-  }
-
+export const error = ({ message, location }, source: string): string => {
   return codeFrameColumns(source, location, { highlightCode: true, message })
 }
 

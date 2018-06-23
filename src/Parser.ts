@@ -1,4 +1,5 @@
 import { EOF, IToken, Lexer, Parser } from 'chevrotain'
+import { map } from 'lodash'
 import { Token } from './AST'
 
 import {
@@ -78,7 +79,7 @@ import {
 const BRSLexer = new Lexer(ALL_TOKENS, {
   deferDefinitionErrorsHandling: true,
   ensureOptimizations: true,
-  positionTracking: 'full'
+  positionTracking: 'onlyStart'
 })
 
 const operator = { LABEL: 'operator' }
@@ -767,16 +768,26 @@ export const parserInstance = new RokuBRSParser([])
 
 const tokens = (list = []): Token[] => {
   return list.map((t: IToken) => {
-    const range: [number, number] = [t.startOffset, t.endOffset]
+    const length = t.image.length
+    const range: [number, number] = [t.startOffset, t.startOffset + length]
 
     return {
-      loc: { start: { column: t.startColumn, line: t.startLine }, end: { column: t.endColumn, line: t.endLine } },
+      loc: { start: { column: t.startColumn, line: t.startLine }, end: { column: t.startColumn + length, line: t.startLine } },
       range,
       type: t.tokenType.tokenName,
       value: t.image
     }
   })
 }
+
+const errors = list =>
+  map(list, ({ name, message, token }) => {
+    const location = {
+      end: { line: token.startLine, column: token.startColumn + token.image.length },
+      start: { line: token.startLine, column: token.startColumn }
+    }
+    return { name, message, location }
+  })
 
 export function parse(source, entryPoint = 'Program') {
   const lexingResult = BRSLexer.tokenize(source)
@@ -786,7 +797,7 @@ export function parse(source, entryPoint = 'Program') {
 
   return {
     lexErrors: lexingResult.errors,
-    parseErrors: parserInstance.errors,
+    parseErrors: errors(parserInstance.errors),
     parserInstance,
     tokens: tokens(lexingResult.tokens),
     value

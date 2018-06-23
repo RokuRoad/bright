@@ -19,10 +19,10 @@ const ast = (source: string, type = 'Program') => {
   const tree = visitor.visit(value, props)
 
   if (parseErrors.length) {
-    const { message, token } = parseErrors[0]
+    const { message, location } = parseErrors[0]
 
-    const column = token.startColumn
-    const line = token.startLine
+    const column = location.start.column
+    const line = location.start.line
 
     const err = new SyntaxError(`${message} at ${line}:${column}`)
 
