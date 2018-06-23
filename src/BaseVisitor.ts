@@ -23,16 +23,19 @@ export class BaseVisitor extends Visitor {
   }
 
   protected byLine(elements: ASTNode[] = []): NumericDictionary<ASTNode> {
-    return mapKeys<ASTNode>(this.asArray(elements), (el: ASTNode): number => {
-      return el.loc && el.loc.start.line
-    })
+    return mapKeys<ASTNode>(
+      this.asArray(elements),
+      (el: ASTNode): number => {
+        return el.loc && el.loc.start.line
+      }
+    )
   }
 
   protected asArray(value: ASTNode | ASTNode[] = []): ASTNode[] {
     if (!value) {
       return []
     }
-    return isArray(value) ? filter(value) : [ value ]
+    return isArray(value) ? filter(value) : [value]
   }
 
   protected mergeTrailing(elements: ASTNode[] = [], trailing: ASTNode[] = []): ASTNode[] {
@@ -55,7 +58,7 @@ export class BaseVisitor extends Visitor {
       return { loc: null, range: null }
     }
 
-    const range: [number, number] = [ null, null ]
+    const range: [number, number] = [null, null]
     const loc = { start: { line: null, column: null }, end: { line: null, column: null } }
 
     if (head.loc !== null) {
@@ -78,10 +81,10 @@ export class BaseVisitor extends Visitor {
   }
 
   protected RenderNode(node): ASTNode {
-    const visitor = (subNode) => {
+    const visitor = subNode => {
       return this.visit(subNode)
     }
-    const mapped = filter(map(node, (subNode) => visitor(subNode)))
+    const mapped = filter(map(node, subNode => visitor(subNode)))
 
     return mapped.length === 1 ? mapped[0] : mapped
   }
@@ -134,7 +137,7 @@ export class BaseVisitor extends Visitor {
       return false
     }
 
-    return this.mapArguments(ctx, (nodes) => first(values(nodes)))
+    return this.mapArguments(ctx, nodes => first(values(nodes)))
   }
 
   protected Position(line: number, column: number): Position {
@@ -142,22 +145,13 @@ export class BaseVisitor extends Visitor {
   }
 
   protected RenderToken(node): ASTNode | ASTNode[] {
-    const mapper = ({
-      startLine,
-      startColumn,
-      image,
-      endLine,
-      endColumn,
-      startOffset,
-      endOffset,
-      tokenType
-    }: TokenContext): ASTNode => {
+    const mapper = ({ startLine, startColumn, image, endLine, endColumn, startOffset, endOffset, tokenType }: TokenContext): ASTNode => {
       const start = this.Position(startLine, startColumn)
       const end = this.Position(endLine, endColumn)
 
       return {
         loc: { source: image, start, end },
-        range: [ startOffset, endOffset ],
+        range: [startOffset, endOffset + image.length],
         type: tokenType.tokenName
       }
     }
