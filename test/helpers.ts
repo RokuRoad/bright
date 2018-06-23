@@ -1,8 +1,8 @@
 import { codeFrameColumns } from '@babel/code-frame'
 import { readFileSync } from 'fs'
 import { sync } from 'glob'
-import { ast, parse } from '../src/main'
 import { inspect } from 'util'
+import { ast, parse } from '../src/main'
 /**
  * Read source code and produce parsed information
  *
@@ -74,6 +74,7 @@ export const error = ({ message, token }, source: string): string => {
 }
 
 export const print = (value: any) => {
+  // tslint:disable-next-line:no-console
   console.log(inspect(value, false, null, true))
 }
 
