@@ -39,18 +39,16 @@ export class BaseVisitor extends Visitor {
   }
 
   protected mergeTrailing(elements: ASTNode[] = [], trailing: ASTNode[] = []): ASTNode[] {
-    const linedElements = this.byLine(elements)
     const linedTrailing = this.byLine(trailing)
-
-    const merger = (el: ASTNode, line: number): ASTNode => {
+    const merger = (el: ASTNode): ASTNode => {
+      const line = el.loc && el.loc.start.line
       if (linedTrailing[line]) {
         el.trailing = linedTrailing[line]
       }
-
       return el
     }
 
-    return map<ASTNode>(linedElements, merger) as any
+    return map<ASTNode>(elements, merger) as any
   }
 
   protected Location(head: ASTNode, tail: ASTNode): Location {
