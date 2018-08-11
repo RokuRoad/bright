@@ -33,16 +33,16 @@
     "dist/*.js"
   ],
   "devDependencies": {
-    "semantic-release": "15.6.1",
     "@types/jest": "23.1.5",
-    "@types/jest": "23.1.5",
-    "@types/lodash": "4.14.110",
+    "semantic-release": "15.7.2",
+    "@types/jest": "23.1.1",
+    "@types/lodash": "4.14.112",
     "@types/node": "^10.3.5",
     "babel-code-frame": "6.26.0",
     "glob-all": "3.1.0",
     "jest": "23.1.0",
     "jest-mock": "23.1.0",
-    "ts-jest": "23.0.0",
+    "ts-jest": "23.0.1",
     "tslib": "^1.9.3",
     "tslint": "^5.10.0",
     "tslint-config-prettier": "^1.13.0",
@@ -50,7 +50,7 @@
     "traverse": "0.6.6"
   },
   "dependencies": {
-    "chevrotain": "3.7.0",
+    "chevrotain": "3.7.2",
     "lodash": "4.17.10"
   }
 }
