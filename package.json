@@ -33,9 +33,9 @@
     "dist/*.js"
   ],
   "devDependencies": {
-    "@types/jest": "23.3.2",
+    "@types/jest": "23.3.4",
     "semantic-release": "15.7.2",
-    "@types/jest": "23.3.2",
+    "@types/jest": "23.3.4",
     "@types/lodash": "4.14.112",
     "@types/node": "^10.3.5",
     "babel-code-frame": "6.26.0",
