@@ -41,7 +41,7 @@
     "babel-code-frame": "6.26.0",
     "glob-all": "3.1.0",
     "jest": "23.1.0",
-    "jest-mock": "23.1.0",
+    "jest-mock": "24.5.0",
     "ts-jest": "23.1.4",
     "tslib": "^1.9.3",
     "tslint": "^5.10.0",
