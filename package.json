@@ -50,7 +50,7 @@
     "traverse": "0.6.6"
   },
   "dependencies": {
-    "chevrotain": "3.7.2",
+    "chevrotain": "4.3.2",
     "lodash": "4.17.11"
   }
 }
