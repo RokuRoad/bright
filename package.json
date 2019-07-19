@@ -51,6 +51,6 @@
   },
   "dependencies": {
     "chevrotain": "3.7.2",
-    "lodash": "4.17.11"
+    "lodash": "4.17.15"
   }
 }
