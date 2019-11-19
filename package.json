@@ -36,7 +36,7 @@
     "@types/jest": "23.3.2",
     "semantic-release": "15.7.2",
     "@types/jest": "23.3.2",
-    "@types/lodash": "4.14.112",
+    "@types/lodash": "4.14.149",
     "@types/node": "^10.3.5",
     "babel-code-frame": "6.26.0",
     "glob-all": "3.1.0",
