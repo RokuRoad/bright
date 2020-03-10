@@ -118,26 +118,26 @@ export class RokuBRSParser extends Parser {
   protected Statement = this.RULE('Statement', () => {
     this.OR2(
       this.cacheStatement ||
-        (this.cacheStatement = [
-          { ALT: () => this.SUBRULE(this.EmptyStatement, Empty) },
-          { ALT: () => this.SUBRULE(this.ForStatement, Statement) },
-          { ALT: () => this.SUBRULE(this.IfStatement, Statement) },
-          { ALT: () => this.SUBRULE(this.ForEachStatement, Statement) },
-          { ALT: () => this.SUBRULE(this.WhileStatement, Statement) },
+      (this.cacheStatement = [
+        { ALT: () => this.SUBRULE(this.EmptyStatement, Empty) },
+        { ALT: () => this.SUBRULE(this.ForStatement, Statement) },
+        { ALT: () => this.SUBRULE(this.IfStatement, Statement) },
+        { ALT: () => this.SUBRULE(this.ForEachStatement, Statement) },
+        { ALT: () => this.SUBRULE(this.WhileStatement, Statement) },
 
-          { ALT: () => this.SUBRULE(this.PrintStatement, Statement) },
-          { ALT: () => this.SUBRULE(this.ReturnStatement, Statement) },
-          { ALT: () => this.SUBRULE(this.StopStatement, Statement) },
-          { ALT: () => this.SUBRULE(this.GoToStatement, Statement) },
-          { ALT: () => this.SUBRULE(this.LabeledStatement, Statement) },
+        { ALT: () => this.SUBRULE(this.PrintStatement, Statement) },
+        { ALT: () => this.SUBRULE(this.ReturnStatement, Statement) },
+        { ALT: () => this.SUBRULE(this.StopStatement, Statement) },
+        { ALT: () => this.SUBRULE(this.GoToStatement, Statement) },
+        { ALT: () => this.SUBRULE(this.LabeledStatement, Statement) },
 
-          { ALT: () => this.SUBRULE(this.ConditionalCompilationStatement, Statement) },
-          { ALT: () => this.SUBRULE(this.DimStatement, Statement) },
-          { ALT: () => this.SUBRULE(this.NextStatement, Statement) },
-          { ALT: () => this.SUBRULE(this.ExitStatement, Statement) },
+        { ALT: () => this.SUBRULE(this.ConditionalCompilationStatement, Statement) },
+        { ALT: () => this.SUBRULE(this.DimStatement, Statement) },
+        { ALT: () => this.SUBRULE(this.NextStatement, Statement) },
+        { ALT: () => this.SUBRULE(this.ExitStatement, Statement) },
 
-          { ALT: () => this.SUBRULE(this.ExpressionStatement, Statement) }
-        ])
+        { ALT: () => this.SUBRULE(this.ExpressionStatement, Statement) }
+      ])
     )
 
     this.OPTION(() => {
@@ -622,17 +622,23 @@ export class RokuBRSParser extends Parser {
   protected PrimaryExpression = this.RULE('PrimaryExpression', () => {
     this.OR(
       this.cachePrimaryExpression ||
-        (this.cachePrimaryExpression = [
-          { ALT: () => this.SUBRULE(this.ArrayExpression) },
-          { ALT: () => this.SUBRULE(this.ObjectExpression) },
-          { ALT: () => this.SUBRULE(this.FunctionExpression) },
-          { ALT: () => this.SUBRULE(this.SubExpression) },
-          { ALT: () => this.SUBRULE(this.ParenthesisExpression) },
-          { ALT: () => this.SUBRULE(this.Identifier) },
-          { ALT: () => this.SUBRULE(this.ReservedWord) },
-          { ALT: () => this.SUBRULE(this.Literal) }
-        ])
+      (this.cachePrimaryExpression = [
+        { ALT: () => this.SUBRULE(this.ArrayExpression) },
+        { ALT: () => this.SUBRULE(this.ObjectExpression) },
+        { ALT: () => this.SUBRULE(this.FunctionExpression) },
+        { ALT: () => this.SUBRULE(this.SubExpression) },
+        { ALT: () => this.SUBRULE(this.ParenthesisExpression) },
+        { ALT: () => this.SUBRULE(this.CallExpression) },
+        { ALT: () => this.SUBRULE(this.Identifier) },
+        { ALT: () => this.SUBRULE(this.ReservedWord) },
+        { ALT: () => this.SUBRULE(this.Literal) }
+      ])
     )
+  })
+
+  protected CallExpression = this.RULE('CallExpression', () => {
+    this.SUBRULE(this.Identifier, { LABEL: 'id' })
+    this.SUBRULE(this.Arguments, { LABEL: 'args' })
   })
 
   protected ParenthesisExpression = this.RULE('ParenthesisExpression', () => {
@@ -663,31 +669,31 @@ export class RokuBRSParser extends Parser {
   protected ReservedWord = this.RULE('ReservedWord', () => {
     this.OR(
       this.cacheReservedWord ||
-        (this.cacheReservedWord = [
-          { ALT: () => this.CONSUME(END) },
-          { ALT: () => this.CONSUME(IN) },
-          { ALT: () => this.CONSUME(MOD) },
-          { ALT: () => this.CONSUME(OBJECT) },
-          { ALT: () => this.CONSUME(STOP) },
-          { ALT: () => this.CONSUME(NEXT) },
-          { ALT: () => this.CONSUME(BOOLEAN) },
-          { ALT: () => this.CONSUME(INTEGER) },
-          { ALT: () => this.CONSUME(LONGINTEGER) },
-          { ALT: () => this.CONSUME(STRING) }
-          //
-        ])
+      (this.cacheReservedWord = [
+        { ALT: () => this.CONSUME(END) },
+        { ALT: () => this.CONSUME(IN) },
+        { ALT: () => this.CONSUME(MOD) },
+        { ALT: () => this.CONSUME(OBJECT) },
+        { ALT: () => this.CONSUME(STOP) },
+        { ALT: () => this.CONSUME(NEXT) },
+        { ALT: () => this.CONSUME(BOOLEAN) },
+        { ALT: () => this.CONSUME(INTEGER) },
+        { ALT: () => this.CONSUME(LONGINTEGER) },
+        { ALT: () => this.CONSUME(STRING) }
+        //
+      ])
     )
   })
 
   protected ConditionalCompilationStatement = this.RULE('ConditionalCompilationStatement', () => {
     this.OR(
       this.cacheConditionalCompilationStatement ||
-        (this.cacheConditionalCompilationStatement = [
-          { ALT: () => this.SUBRULE(this.ConditionalConst) },
-          { ALT: () => this.SUBRULE(this.ConditionalError) },
-          { ALT: () => this.SUBRULE(this.ConditionalIfStatement) }
-          //
-        ])
+      (this.cacheConditionalCompilationStatement = [
+        { ALT: () => this.SUBRULE(this.ConditionalConst) },
+        { ALT: () => this.SUBRULE(this.ConditionalError) },
+        { ALT: () => this.SUBRULE(this.ConditionalIfStatement) }
+        //
+      ])
     )
   })
 

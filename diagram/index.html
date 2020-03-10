@@ -2067,7 +2067,7 @@
   {
     "type": "Rule",
     "name": "PrimaryExpression",
-    "orgText": "() => {\n            this.OR(this.cachePrimaryExpression ||\n                (this.cachePrimaryExpression = [\n                    { ALT: () => this.SUBRULE(this.ArrayExpression) },\n                    { ALT: () => this.SUBRULE(this.ObjectExpression) },\n                    { ALT: () => this.SUBRULE(this.FunctionExpression) },\n                    { ALT: () => this.SUBRULE(this.SubExpression) },\n                    { ALT: () => this.SUBRULE(this.ParenthesisExpression) },\n                    { ALT: () => this.SUBRULE(this.Identifier) },\n                    { ALT: () => this.SUBRULE(this.ReservedWord) },\n                    { ALT: () => this.SUBRULE(this.Literal) }\n                ]));\n        }",
+    "orgText": "() => {\n            this.OR(this.cachePrimaryExpression ||\n                (this.cachePrimaryExpression = [\n                    { ALT: () => this.SUBRULE(this.ArrayExpression) },\n                    { ALT: () => this.SUBRULE(this.ObjectExpression) },\n                    { ALT: () => this.SUBRULE(this.FunctionExpression) },\n                    { ALT: () => this.SUBRULE(this.SubExpression) },\n                    { ALT: () => this.SUBRULE(this.ParenthesisExpression) },\n                    { ALT: () => this.SUBRULE(this.CallExpression) },\n                    { ALT: () => this.SUBRULE(this.Identifier) },\n                    { ALT: () => this.SUBRULE(this.ReservedWord) },\n                    { ALT: () => this.SUBRULE(this.Literal) }\n                ]));\n        }",
     "definition": [
       {
         "type": "Alternation",
@@ -2128,6 +2128,16 @@
             "definition": [
               {
                 "type": "NonTerminal",
+                "name": "CallExpression",
+                "idx": 0
+              }
+            ]
+          },
+          {
+            "type": "Flat",
+            "definition": [
+              {
+                "type": "NonTerminal",
                 "name": "Identifier",
                 "idx": 0
               }
@@ -2154,6 +2164,23 @@
             ]
           }
         ]
+      }
+    ]
+  },
+  {
+    "type": "Rule",
+    "name": "CallExpression",
+    "orgText": "() => {\n            this.SUBRULE(this.Identifier, { LABEL: 'id' });\n            this.SUBRULE(this.Arguments, { LABEL: 'args' });\n        }",
+    "definition": [
+      {
+        "type": "NonTerminal",
+        "name": "Identifier",
+        "idx": 0
+      },
+      {
+        "type": "NonTerminal",
+        "name": "Arguments",
+        "idx": 0
       }
     ]
   },
