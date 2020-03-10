@@ -7,7 +7,11 @@
     "declaration": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "lib": ["dom", "es6", "es2015"],
+    "lib": [
+      "dom",
+      "es6",
+      "es2015"
+    ],
     "module": "commonjs",
     "outDir": "dist",
     "moduleResolution": "node",
@@ -19,10 +23,14 @@
     "removeComments": true,
     "sourceMap": false,
     "target": "es6",
-    "typeRoots": ["node_modules/@types"]
+    "typeRoots": [
+      "node_modules/@types"
+    ]
   },
   "typeAcquisition": {
     "enable": true
   },
-  "include": ["src"]
+  "include": [
+    "src"
+  ]
 }

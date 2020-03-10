@@ -14,8 +14,14 @@ describe('Location tests', () => {
   test('Should identify location of multiline statement', () => {
     expect(() => {
       const ast = sourceAST(['function gotoStatement()', '  mylabel:', '  print "Anthony was here!"', '', ' goto mylabel', 'end function', ''].join('\n'))
-
       expect(ast.range).toEqual([0, 92])
+    }).not.toThrow()
+  })
+
+  test('Should find chains', () => {
+    expect(() => {
+      const ast = sourceAST('logUtil().debug("Writing hideScores:{0} to registry", v)', 'BlockStatement')
+      expect(ast.range).toEqual([0, 56])
     }).not.toThrow()
   })
 })

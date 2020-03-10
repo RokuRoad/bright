@@ -715,12 +715,15 @@ export class ASTVisitor extends BaseVisitor {
    *
    * @memberOf ASTVisitor
    */
-  public CallExpression({ id, args }: NodeContext): ASTNode {
+  public CallExpression({ id, args, properties }: NodeContext): ASTNode {
+    properties = this.asArray(properties)
+    const tail = properties.length > 0 ? last(properties) : args
     return {
-      ...this.Location(id, args),
+      ...this.Location(id, tail),
       args,
       callee: id,
-      type: 'CallExpression'
+      properties,
+      type: 'CallExpression',
     }
   }
 
@@ -757,7 +760,7 @@ export class ASTVisitor extends BaseVisitor {
       this.singleArgument(ctx) ||
       this.mapArguments(ctx, ({ id, properties = [], args = '' }) => {
         if (args) {
-          return this.asNode(this.CallExpression({ id, args }), ctx)
+          return this.asNode(this.CallExpression({ id, args, properties }), ctx)
         } else {
           return this.asNode(this.ObjectMemberExpression({ id, properties }), ctx)
         }
@@ -778,7 +781,7 @@ export class ASTVisitor extends BaseVisitor {
       this.singleArgument(ctx) ||
       this.mapArguments(ctx, ({ property, args }) => {
         if (args) {
-          return this.CallExpression({ id: property, args })
+          return this.CallExpression({ id: property, args, properties: [] })
         } else {
           return this.ObjectMemberExpression({ id: property, properties: [] })
         }
@@ -841,7 +844,6 @@ export class ASTVisitor extends BaseVisitor {
       )
     })
   }
-
   /**
    *
    *
