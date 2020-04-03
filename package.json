@@ -33,7 +33,7 @@
     "dist/*.js"
   ],
   "devDependencies": {
-    "@types/jest": "23.3.2",
+    "@types/jest": "25.2.1",
     "@types/lodash": "4.14.112",
     "@types/node": "^11.9.0",
     "babel-code-frame": "6.26.0",
