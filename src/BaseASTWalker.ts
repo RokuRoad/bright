@@ -142,7 +142,7 @@ export class BaseASTWalker implements ASTWalker<ASTNode | ASTNode[]> {
   public WhileStatement(): ASTNode | ASTNode[] {
     throw new Error("Method not implemented.");
   }
-  public TryStatement(): ASTNode | ASTNode[] {
+  public RokuTryStatement(): ASTNode | ASTNode[] {
     throw new Error("Method not implemented.");
   }
   public BlockStatement(): ASTNode | ASTNode[] {

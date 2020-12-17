@@ -133,7 +133,7 @@ export class RokuBRSParser extends Parser {
           { ALT: () => this.SUBRULE(this.IfStatement, Statement) },
           { ALT: () => this.SUBRULE(this.ForEachStatement, Statement) },
           { ALT: () => this.SUBRULE(this.WhileStatement, Statement) },
-          { ALT: () => this.SUBRULE(this.TryStatement, Statement) },
+          { ALT: () => this.SUBRULE(this.RokuTryStatement, Statement) },
           { ALT: () => this.SUBRULE(this.PrintStatement, Statement) },
           { ALT: () => this.SUBRULE(this.ReturnStatement, Statement) },
           { ALT: () => this.SUBRULE(this.StopStatement, Statement) },
@@ -403,7 +403,7 @@ export class RokuBRSParser extends Parser {
     this.CONSUME(END_WHILE);
   });
 
-  protected TryStatement = this.RULE("TryStatement", () => {
+  protected RokuTryStatement = this.RULE("RokuTryStatement", () => {
     this.CONSUME(TRY);
     this.SUBRULE1(this.BlockStatement, { LABEL: "body" });
     this.CONSUME(CATCH);

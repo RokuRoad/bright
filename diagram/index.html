@@ -156,7 +156,7 @@
   {
     "type": "Rule",
     "name": "Statement",
-    "orgText": "() => {\n            this.OR2(this.cacheStatement ||\n                (this.cacheStatement = [\n                    { ALT: () => this.SUBRULE(this.EmptyStatement, Empty) },\n                    { ALT: () => this.SUBRULE(this.ForStatement, Statement) },\n                    { ALT: () => this.SUBRULE(this.IfStatement, Statement) },\n                    { ALT: () => this.SUBRULE(this.ForEachStatement, Statement) },\n                    { ALT: () => this.SUBRULE(this.WhileStatement, Statement) },\n                    { ALT: () => this.SUBRULE(this.TryStatement, Statement) },\n                    { ALT: () => this.SUBRULE(this.PrintStatement, Statement) },\n                    { ALT: () => this.SUBRULE(this.ReturnStatement, Statement) },\n                    { ALT: () => this.SUBRULE(this.StopStatement, Statement) },\n                    { ALT: () => this.SUBRULE(this.GoToStatement, Statement) },\n                    { ALT: () => this.SUBRULE(this.LabeledStatement, Statement) },\n                    {\n                        ALT: () => this.SUBRULE(this.ConditionalCompilationStatement, Statement),\n                    },\n                    { ALT: () => this.SUBRULE(this.DimStatement, Statement) },\n                    { ALT: () => this.SUBRULE(this.NextStatement, Statement) },\n                    { ALT: () => this.SUBRULE(this.ExitStatement, Statement) },\n                    { ALT: () => this.SUBRULE(this.ExpressionStatement, Statement) },\n                ]));\n            this.OPTION(() => {\n                this.SUBRULE2(this.Comment, { LABEL: \"trailingComments\" });\n            });\n        }",
+    "orgText": "() => {\n            this.OR2(this.cacheStatement ||\n                (this.cacheStatement = [\n                    { ALT: () => this.SUBRULE(this.EmptyStatement, Empty) },\n                    { ALT: () => this.SUBRULE(this.ForStatement, Statement) },\n                    { ALT: () => this.SUBRULE(this.IfStatement, Statement) },\n                    { ALT: () => this.SUBRULE(this.ForEachStatement, Statement) },\n                    { ALT: () => this.SUBRULE(this.WhileStatement, Statement) },\n                    { ALT: () => this.SUBRULE(this.RokuTryStatement, Statement) },\n                    { ALT: () => this.SUBRULE(this.PrintStatement, Statement) },\n                    { ALT: () => this.SUBRULE(this.ReturnStatement, Statement) },\n                    { ALT: () => this.SUBRULE(this.StopStatement, Statement) },\n                    { ALT: () => this.SUBRULE(this.GoToStatement, Statement) },\n                    { ALT: () => this.SUBRULE(this.LabeledStatement, Statement) },\n                    {\n                        ALT: () => this.SUBRULE(this.ConditionalCompilationStatement, Statement),\n                    },\n                    { ALT: () => this.SUBRULE(this.DimStatement, Statement) },\n                    { ALT: () => this.SUBRULE(this.NextStatement, Statement) },\n                    { ALT: () => this.SUBRULE(this.ExitStatement, Statement) },\n                    { ALT: () => this.SUBRULE(this.ExpressionStatement, Statement) },\n                ]));\n            this.OPTION(() => {\n                this.SUBRULE2(this.Comment, { LABEL: \"trailingComments\" });\n            });\n        }",
     "definition": [
       {
         "type": "Alternation",
@@ -217,7 +217,7 @@
             "definition": [
               {
                 "type": "NonTerminal",
-                "name": "TryStatement",
+                "name": "RokuTryStatement",
                 "idx": 0
               }
             ]
@@ -1223,7 +1223,7 @@
   },
   {
     "type": "Rule",
-    "name": "TryStatement",
+    "name": "RokuTryStatement",
     "orgText": "() => {\n            this.CONSUME(Tokens_1.TRY);\n            this.SUBRULE1(this.BlockStatement, { LABEL: \"body\" });\n            this.CONSUME(Tokens_1.CATCH);\n            this.SUBRULE(this.ExpressionStatement, { LABEL: \"exception\" });\n            this.SUBRULE(this.EndOfStatement, { LABEL: \"trailingComments\" });\n            this.SUBRULE2(this.BlockStatement, { LABEL: \"onError\" });\n            this.CONSUME(Tokens_1.END_TRY);\n        }",
     "definition": [
       {

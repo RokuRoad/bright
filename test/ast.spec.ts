@@ -1,31 +1,31 @@
-import { fileAST, sourceAST /* , print */ } from './helpers'
+import { fileAST, sourceAST /* , print */ } from "./helpers";
 
-describe('AST', () => {
-  test('Should be able to Parse AST', () => {
+describe("AST", () => {
+  test("Should be able to Parse AST", () => {
     expect(() => {
-      fileAST(__dirname + '/assets/rodash.brs')
-    }).not.toThrow()
-  })
+      fileAST(__dirname + "/assets/rodash.brs");
+    }).not.toThrow();
+  });
 
-  test('Should be able to walk AST', () => {
+  test("Should be able to walk AST", () => {
     expect(() => {
-      fileAST(__dirname + '/assets/syntax.brs')
-    }).not.toThrow()
-  })
+      fileAST(__dirname + "/assets/syntax.brs");
+    }).not.toThrow();
+  });
 
-  test('Should be able parse inline AST #1', () => {
+  test("Should be able parse inline AST #1", () => {
     expect(() => {
-      sourceAST('c[x, y, z] = k', 'BlockStatement')
-    }).not.toThrow()
-  })
+      sourceAST("c[x, y, z] = k", "BlockStatement");
+    }).not.toThrow();
+  });
 
-  test('Should be able parse inline AST #2', () => {
+  test("Should be able parse inline AST #2", () => {
     expect(() => {
-      sourceAST('Library "lib1"')
-    }).not.toThrow()
-  })
+      sourceAST('Library "lib1"');
+    }).not.toThrow();
+  });
 
-  test('Should be able parse inline AST with comments', () => {
+  test("Should be able parse inline AST with comments", () => {
     expect(() => {
       sourceAST(`
       ' /**
@@ -55,21 +55,21 @@ describe('AST', () => {
         end for                                           '7
         return result                                     '8
       End Function                                        '9
-      `)
+      `);
 
       // console.log(inspect(ast, false, null, true))
-    }).not.toThrow()
-  })
+    }).not.toThrow();
+  });
 
-  test('Should be able parse inline AST #3', () => {
+  test("Should be able parse inline AST #3", () => {
     expect(() => {
-      /* const ast =  */ sourceAST('m.top.findNode("label")', 'BlockStatement')
+      /* const ast =  */ sourceAST('m.top.findNode("label")', "BlockStatement");
 
       // print(ast)
-    }).not.toThrow()
-  })
+    }).not.toThrow();
+  });
 
-  test('Should be able parse reserved words', () => {
+  test("Should be able parse reserved words", () => {
     expect(() => {
       sourceAST(
         `
@@ -87,8 +87,30 @@ describe('AST', () => {
       mod = "stop"
 
       `,
-        'BlockStatement'
-      )
-    }).not.toThrow()
-  })
-})
+        "BlockStatement"
+      );
+    }).not.toThrow();
+  });
+  test("Should be able parse try catch", () => {
+    expect(() => {
+      sourceAST(
+        `try
+            m.stop.findNode("label")
+
+            a = {
+                in:5
+                stop:10
+                mod: 5
+                next: function(mod)
+                        print b
+                    end function
+            }
+
+            mod = "stop"
+        catch e 
+        end try`,
+        "RokuTryStatement"
+      );
+    }).not.toThrow();
+  });
+});

@@ -59,7 +59,7 @@ const visitorKeys = {
   UnTypedIdentifier: ["name"],
   UnaryExpression: ["operator", "argument"],
   WhileStatement: ["test", "body"],
-  TryStatement: ["body", "trailingComments", "exception", "onError"],
+  RokuTryStatement: ["body", "trailingComments", "exception", "onError"],
 };
 
 export { visitorKeys };

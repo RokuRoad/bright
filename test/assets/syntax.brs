@@ -178,7 +178,6 @@ function dimStatement()
             end for
         end for
     catch e
-        ? "print"
     end try
 
 

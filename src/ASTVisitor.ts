@@ -655,13 +655,13 @@ export class ASTVisitor extends BaseVisitor {
    *
    * @memberOf ASTVisitor
    */
-  public TryStatement(ctx: NodeContext): ASTNode {
+  public RokuTryStatement(ctx: NodeContext): ASTNode {
     return this.mapArguments(
       ctx,
       ({ TRY, END_TRY, body, trailingComments, exception, onError }) => {
         return this.asNode(
           {
-            type: "TryStatement",
+            type: "RokuTryStatement",
             body,
             trailingComments,
             exception,
