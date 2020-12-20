@@ -37,7 +37,7 @@
     "@types/lodash": "4.14.112",
     "@types/node": "^11.9.0",
     "babel-code-frame": "6.26.0",
-    "glob-all": "3.1.0",
+    "glob-all": "3.2.1",
     "jest": "23.1.0",
     "jest-mock": "23.1.0",
     "semantic-release": "15.7.2",
